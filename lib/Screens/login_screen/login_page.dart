@@ -13,6 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _autoValidate = false;
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -84,21 +85,35 @@ class _LoginPageState extends State<LoginPage> {
                         TextFormField(
                           controller: _passwordController,
                           textInputAction: TextInputAction.done,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: 'Password',
-                            hintStyle: TextStyle(color: Colors.white54),
+                            hintStyle: const TextStyle(color: Colors.white54),
                             filled: true,
-                            fillColor: Color.fromRGBO(217, 217, 217, 0.32),
+                            fillColor:
+                                const Color.fromRGBO(217, 217, 217, 0.32),
                             border: border,
                             focusedBorder: border,
                             enabledBorder: border,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isObscure
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.white54,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure;
+                                });
+                              },
+                            ),
                           ),
-                          obscureText: true,
+                          obscureText: _isObscure,
                           style: const TextStyle(color: Colors.white),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Password is required';
-                            }else if(value.length < 8 ){
+                            } else if (value.length < 8) {
                               return 'Password must be at least 8 characters long';
                             }
                             return null;
@@ -132,7 +147,8 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
                                 // Process login
-                                print("${_emailController.text.toUpperCase().trim()}\n${_passwordController.text}" );
+                                print(
+                                    "${_emailController.text.toUpperCase().trim()}\n${_passwordController.text}");
                               } else {
                                 setState(() {
                                   _autoValidate = true;
