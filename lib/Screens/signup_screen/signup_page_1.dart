@@ -2,12 +2,24 @@ import 'package:be_glamourous/Screens/signup_screen/signup_page_2.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
 
-class SignupPage1 extends StatelessWidget {
+class SignupPage1 extends StatefulWidget {
   const SignupPage1({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  _SignupPage1State createState() => _SignupPage1State();
+}
 
+class _SignupPage1State extends State<SignupPage1> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool _autoValidate = false;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
+  @override
+  Widget build(BuildContext context) {
     final textFieldLabelStyle = TextStyle(
       fontSize: 28,
       color: Theme.of(context).colorScheme.secondary,
@@ -28,129 +40,204 @@ class SignupPage1 extends StatelessWidget {
         },
         child: Container(
           decoration: DecorationHelper.backgroundDecoration(),
-          child: Column(
-            children: [
-              const Spacer(
-                flex: 1,
-              ),
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Email',
-                        style: textFieldLabelStyle,
-                      ),
-                      const TextField(
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          hintText: 'Email',
-                          hintStyle: TextStyle(color: Colors.white54),
-                          filled: true,
-                          fillColor: Color.fromRGBO(217, 217, 217, 0.32),
-                          border: border,
-                          enabledBorder: border,
-                          focusedBorder: border,
-                        ),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      const SizedBox(height: 32),
-                      Text(
-                        'Password',
-                        style: textFieldLabelStyle,
-                      ),
-                      const TextField(
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          hintStyle: TextStyle(color: Colors.white54),
-                          filled: true,
-                          fillColor: Color.fromRGBO(217, 217, 217, 0.32),
-                          border: border,
-                          focusedBorder: border,
-                          enabledBorder: border,
-                        ),
-                        obscureText: true,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      const SizedBox(height: 32),
-                      Text(
-                        'Confirm Password',
-                        style: textFieldLabelStyle,
-                      ),
-                      const TextField(
-                        textInputAction: TextInputAction.done,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          hintStyle: TextStyle(color: Colors.white54),
-                          filled: true,
-                          fillColor: Color.fromRGBO(217, 217, 217, 0.32),
-                          border: border,
-                          focusedBorder: border,
-                          enabledBorder: border,
-                        ),
-                        obscureText: true,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
+          child: Form(
+            key: _formKey,
+            autovalidateMode: _autoValidate
+                ? AutovalidateMode.onUserInteraction
+                : AutovalidateMode.disabled,
+            child: Column(
+              children: [
+                const Spacer(
+                  flex: 1,
                 ),
-              ),
-              const Spacer(),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Email',
+                          style: textFieldLabelStyle,
                         ),
-                        child: Text(
-                          'Back',
-                          style: DecorationHelper.buttonTextStyle(),
-                        ),
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return const SignupPage2();
-                              },
-                            ));
+                        TextFormField(
+                          controller: _emailController,
+                          textInputAction: TextInputAction.next,
+                          decoration: const InputDecoration(
+                            hintText: 'Email',
+                            hintStyle: TextStyle(color: Colors.white54),
+                            filled: true,
+                            fillColor: Color.fromRGBO(217, 217, 217, 0.32),
+                            border: border,
+                            enabledBorder: border,
+                            focusedBorder: border,
+                          ),
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Email is required';
+                            }
+                            return null;
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.secondary,
-                            elevation: 0,
-                            minimumSize: const Size.square(65),
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(55),
+                        ),
+                        const SizedBox(height: 32),
+                        Text(
+                          'Password',
+                          style: textFieldLabelStyle,
+                        ),
+                        TextFormField(
+                          controller: _passwordController,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: 'Password',
+                            hintStyle: const TextStyle(color: Colors.white54),
+                            filled: true,
+                            fillColor:
+                                const Color.fromRGBO(217, 217, 217, 0.32),
+                            border: border,
+                            enabledBorder: border,
+                            focusedBorder: border,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.white54,
                               ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
                             ),
                           ),
+                          obscureText: _obscurePassword,
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password is required';
+                            }else if(value.length < 8){
+                              return 'Password must be at least 8 characters long';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 32),
+                        Text(
+                          'Confirm Password',
+                          style: textFieldLabelStyle,
+                        ),
+                        TextFormField(
+                          controller: _confirmPasswordController,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            hintText: 'Confirm Password',
+                            hintStyle: const TextStyle(color: Colors.white54),
+                            filled: true,
+                            fillColor:
+                                const Color.fromRGBO(217, 217, 217, 0.32),
+                            border: border,
+                            enabledBorder: border,
+                            focusedBorder: border,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureConfirmPassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.white54,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscureConfirmPassword =
+                                      !_obscureConfirmPassword;
+                                });
+                              },
+                            ),
+                          ),
+                          obscureText: _obscureConfirmPassword,
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Confirm Password is required';
+                            }
+                            if (value != _passwordController.text) {
+                              return 'Passwords do not match';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                          ),
                           child: Text(
-                            'Next',
+                            'Back',
                             style: DecorationHelper.buttonTextStyle(),
                           ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const SignupPage2();
+                                  },
+                                ));
+                              } else {
+                                setState(() {
+                                  _autoValidate = true;
+                                });
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              elevation: 0,
+                              minimumSize: const Size.square(65),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(55),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              'Next',
+                              style: DecorationHelper.buttonTextStyle(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 }
