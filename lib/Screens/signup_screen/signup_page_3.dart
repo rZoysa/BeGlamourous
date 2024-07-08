@@ -10,6 +10,9 @@ class SignupPage3 extends StatefulWidget {
 }
 
 class _SignupPage3State extends State<SignupPage3> {
+  String selectedSkinType = '';
+  bool showErrMsg = false;
+
   @override
   Widget build(BuildContext context) {
     final textFieldLabelStyle = TextStyle(
@@ -36,9 +39,27 @@ class _SignupPage3State extends State<SignupPage3> {
                       'Choose Your Skin Type',
                       style: textFieldLabelStyle,
                     ),
-                    const Column(
-                      children: [Skintypebuttons()],
+                    const SizedBox(height: 16),
+                    Skintypebuttons(
+                      onSkinTypeSelected: (skinType) {
+                        setState(() {
+                          selectedSkinType = skinType;
+                          showErrMsg = false;
+                        });
+                      },
                     ),
+                    if (showErrMsg)
+                      Container(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Please select a skin type to continue.',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -64,7 +85,16 @@ class _SignupPage3State extends State<SignupPage3> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (selectedSkinType.isEmpty) {
+                            setState(() {
+                              // Trigger the prompt to select a skin type
+                              showErrMsg = true;
+                            });
+                          } else {
+                            // Proceed with sign-up or next steps
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Theme.of(context).colorScheme.secondary,

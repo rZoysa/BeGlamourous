@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Skintypebuttons extends StatefulWidget {
-  const Skintypebuttons({super.key});
+  final void Function(String) onSkinTypeSelected;
+
+  const Skintypebuttons({super.key, required this.onSkinTypeSelected});
 
   @override
   State<Skintypebuttons> createState() => _SkintypebuttonsState();
@@ -18,11 +20,6 @@ class _SkintypebuttonsState extends State<Skintypebuttons> {
   ];
 
   String selectedSkinType = '';
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   List<Widget> _buildSkinTypeButtons() {
     List<Widget> buttons = [];
@@ -54,17 +51,20 @@ class _SkintypebuttonsState extends State<Skintypebuttons> {
       onPressed: () {
         setState(() {
           selectedSkinType = skinType;
+          widget.onSkinTypeSelected(skinType);
         });
       },
       style: ElevatedButton.styleFrom(
-          backgroundColor: selectedSkinType == skinType
-              ? Theme.of(context).colorScheme.secondary
-              : const Color.fromRGBO(217, 217, 217, 0.30),
-          minimumSize: const Size(175, 42),
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          )),
+        backgroundColor: selectedSkinType == skinType
+            ? Theme.of(context).colorScheme.secondary
+            : const Color.fromRGBO(217, 217, 217, 0.30),
+        minimumSize: const Size(175, 42),
+        maximumSize: const Size(double.infinity, 42),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+      ),
       child: Text(
         skinType,
         style: const TextStyle(
