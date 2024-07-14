@@ -1,9 +1,15 @@
 import 'package:be_glamourous/Screens/signup_screen/signup_page_3.dart';
+import 'package:be_glamourous/models/user_signup_data.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage2 extends StatefulWidget {
-  const SignupPage2({super.key});
+  final UserSignupData userSignupData;
+
+  const SignupPage2({
+    super.key,
+    required this.userSignupData,
+  });
 
   @override
   State<SignupPage2> createState() => _SignupPage2State();
@@ -17,6 +23,32 @@ class _SignupPage2State extends State<SignupPage2> {
   int selectedAge = 18;
   bool _autoValidate = false;
   bool _genderSelected = true;
+
+  void _goToNextPage() {
+    if (_formKey.currentState?.validate() ?? false) {
+      if (gender.isEmpty) {
+        setState(() {
+          _genderSelected = false;
+        });
+      } else {
+        widget.userSignupData.firstName = _firstNameController.text;
+        widget.userSignupData.lastName = _lastNameController.text;
+        widget.userSignupData.gender = gender;
+        widget.userSignupData.age = selectedAge;
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SignupPage3(userSignupData: widget.userSignupData),
+          ),
+        );
+      }
+    } else {
+      setState(() {
+        _autoValidate = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -266,28 +298,7 @@ class _SignupPage2State extends State<SignupPage2> {
                           ),
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState?.validate() ?? false) {
-                                  if (gender.isEmpty) {
-                                    setState(() {
-                                      _genderSelected = false;
-                                    });
-                                  } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return const SignupPage3();
-                                        },
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  setState(() {
-                                    _autoValidate = true;
-                                  });
-                                }
-                              },
+                              onPressed: _goToNextPage,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     Theme.of(context).colorScheme.secondary,

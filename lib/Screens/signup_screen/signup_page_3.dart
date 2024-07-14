@@ -1,9 +1,16 @@
 import 'package:be_glamourous/Screens/signup_screen/widgets/skin_type_buttons.dart';
+import 'package:be_glamourous/models/user_signup_data.dart';
+import 'package:be_glamourous/services/auth_service.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage3 extends StatefulWidget {
-  const SignupPage3({super.key});
+  final UserSignupData userSignupData;
+
+  const SignupPage3({
+    super.key,
+    required this.userSignupData,
+  });
 
   @override
   State<SignupPage3> createState() => _SignupPage3State();
@@ -12,6 +19,18 @@ class SignupPage3 extends StatefulWidget {
 class _SignupPage3State extends State<SignupPage3> {
   String selectedSkinType = '';
   bool showErrMsg = false;
+
+  void _completeSignup() {
+    if (selectedSkinType.isEmpty) {
+      setState(() {
+        showErrMsg = true;
+      });
+    } else {
+      widget.userSignupData.skinType = selectedSkinType;
+      // Call your signup function here
+      signupUser(widget.userSignupData);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,16 +104,7 @@ class _SignupPage3State extends State<SignupPage3> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
-                          if (selectedSkinType.isEmpty) {
-                            setState(() {
-                              // Trigger the prompt to select a skin type
-                              showErrMsg = true;
-                            });
-                          } else {
-                            // Proceed with sign-up or next steps
-                          }
-                        },
+                        onPressed: _completeSignup,
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Theme.of(context).colorScheme.secondary,

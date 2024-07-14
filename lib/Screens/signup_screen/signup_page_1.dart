@@ -1,4 +1,5 @@
 import 'package:be_glamourous/Screens/signup_screen/signup_page_2.dart';
+import 'package:be_glamourous/models/user_signup_data.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,30 @@ class _SignupPage1State extends State<SignupPage1> {
   bool _autoValidate = false;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  void _goToNextPage() {
+    if (_formKey.currentState?.validate() ?? false) {
+      final userSignupData = UserSignupData(
+        email: _emailController.text,
+        password: _passwordController.text,
+        firstName: '',
+        lastName: '',
+        gender: '',
+        age: 18,
+        skinType: '',
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignupPage2(userSignupData: userSignupData),
+        ),
+      );
+    } else {
+      setState(() {
+        _autoValidate = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +141,7 @@ class _SignupPage1State extends State<SignupPage1> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Password is required';
-                            }else if(value.length < 8){
+                            } else if (value.length < 8) {
                               return 'Password must be at least 8 characters long';
                             }
                             return null;
@@ -191,19 +216,7 @@ class _SignupPage1State extends State<SignupPage1> {
                         ),
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState?.validate() ?? false) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return const SignupPage2();
-                                  },
-                                ));
-                              } else {
-                                setState(() {
-                                  _autoValidate = true;
-                                });
-                              }
-                            },
+                            onPressed: _goToNextPage,
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   Theme.of(context).colorScheme.secondary,
