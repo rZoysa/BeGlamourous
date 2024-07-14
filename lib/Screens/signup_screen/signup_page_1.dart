@@ -19,6 +19,13 @@ class _SignupPage1State extends State<SignupPage1> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
+  bool _isValidEmail(String email) {
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$',
+    );
+    return emailRegex.hasMatch(email);
+  }
+
   void _goToNextPage() {
     if (_formKey.currentState?.validate() ?? false) {
       final userSignupData = UserSignupData(
@@ -101,6 +108,8 @@ class _SignupPage1State extends State<SignupPage1> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Email is required';
+                            }else if (!_isValidEmail(value)){
+                              return 'Enter a valid email';
                             }
                             return null;
                           },
