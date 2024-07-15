@@ -20,16 +20,40 @@ class _SignupPage3State extends State<SignupPage3> {
   String selectedSkinType = '';
   bool showErrMsg = false;
 
-  void _completeSignup() {
-    if (selectedSkinType.isEmpty) {
-      setState(() {
-        showErrMsg = true;
-      });
+  void _completeSignup() async {
+  if (selectedSkinType.isEmpty) {
+    setState(() {
+      showErrMsg = true;
+    });
+  } else {
+    widget.userSignupData.skinType = selectedSkinType;
+    bool success = await signupUser(widget.userSignupData);
+    if (success) {
+      // Navigator.pushReplacementNamed(context, '/home'); // Assuming '/home' is your home route
     } else {
-      widget.userSignupData.skinType = selectedSkinType;
-      // Call your signup function here
-      signupUser(widget.userSignupData);
+      // Show an error message
+      _showErrorDialog();
     }
+  }
+}
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Signup Failed'),
+        content:
+            const Text('An error occurred during signup. Please try again.'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop(); // Dismiss the dialog
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override

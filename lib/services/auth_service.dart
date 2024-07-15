@@ -1,37 +1,46 @@
+import 'dart:convert';
+
 import 'package:be_glamourous/models/user_signup_data.dart';
-import 'package:flutter/material.dart';
-// Add your backend API service or Firebase service here
-// import 'package:your_project/services/api_service.dart';
+import 'package:be_glamourous/services/api_url.dart';
+import 'package:crypto/crypto.dart';
+import 'package:http/http.dart' as http;
 
-Future<void> signupUser(UserSignupData userSignupData) async {
+final String apiURL = apiUrl();
+
+Future<bool> signupUser(UserSignupData userSignupData) async {
+  final String url = "$apiURL/api/signup"; // API endpoint URL
+
+  // Hash the password using SHA-256
+  var bytes = utf8.encode(userSignupData.password); // data being hashed
+  var hashedPassword = sha256.convert(bytes).toString();
+
   try {
-    // Example for sending data to a backend server
-    // final response = await ApiService.signupUser(userSignupData);
-    // if (response.isSuccess) {
-    //   // Handle successful signup
-    // } else {
-    //   // Handle signup failure
-    // }
+    final response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email': userSignupData.email,
+        'password': hashedPassword,
+        'firstName': userSignupData.firstName,
+        'lastName': userSignupData.lastName,
+        'gender': userSignupData.gender,
+        'age': userSignupData.age,
+        'skinType': userSignupData.skinType,
+      }),
+    );
 
-    // Example for Firebase Authentication
-    // final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    //   email: userSignupData.email,
-    //   password: userSignupData.password,
-    // );
-    // if (userCredential.user != null) {
-    //   // Save additional user data to Firestore
-    //   await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
-    //     'firstName': userSignupData.firstName,
-    //     'lastName': userSignupData.lastName,
-    //     'gender': userSignupData.gender,
-    //     'age': userSignupData.age,
-    //     'skinType': userSignupData.skinType,
-    //   });
-    // }
-
-    // For demonstration, print the user data
-    print('Signup data: ${userSignupData.email}, ${userSignupData.password}, ${userSignupData.firstName}, ${userSignupData.lastName}, ${userSignupData.gender}, ${userSignupData.age}, ${userSignupData.skinType}');
+    if (response.statusCode == 201) {
+      print('User registered successfully');
+      return true; // Signifies success
+    } else {
+      print('Failed to register user. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      return false; // Signifies failure
+    }
   } catch (e) {
     print('Signup failed: $e');
+    return false; // Signifies failure
   }
 }
