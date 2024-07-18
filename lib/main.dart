@@ -1,3 +1,4 @@
+import 'package:be_glamourous/Screens/home_screen/home_page.dart';
 import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      routes: {
+        '/home': (context) => const HomePage(),
+      },
       theme: ThemeData(
         fontFamily: 'KaiseiDecol',
         colorScheme: ColorScheme.fromSeed(

@@ -145,8 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
                                 // Process login
-                                print(
-                                    "${_emailController.text.toUpperCase().trim()}\n${_passwordController.text}");
+                                Navigator.pushReplacementNamed(context, '/home');
                               } else {
                                 setState(() {
                                   _autoValidate = true;
