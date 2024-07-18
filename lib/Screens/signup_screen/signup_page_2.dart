@@ -39,7 +39,8 @@ class _SignupPage2State extends State<SignupPage2> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SignupPage3(userSignupData: widget.userSignupData),
+            builder: (context) =>
+                SignupPage3(userSignupData: widget.userSignupData),
           ),
         );
       }
@@ -211,8 +212,8 @@ class _SignupPage2State extends State<SignupPage2> {
                             ],
                           ),
                           if (!_genderSelected)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16.0),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 16.0),
                               child: Text(
                                 'Please select a gender to continue.',
                                 style: TextStyle(
