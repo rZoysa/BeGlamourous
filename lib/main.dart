@@ -1,7 +1,9 @@
 import 'package:be_glamourous/Screens/home_screen/home_page.dart';
 import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
+import 'package:be_glamourous/providers/user_signup_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -13,21 +15,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/home': (context) => const HomePage(),
-      },
-      theme: ThemeData(
-        fontFamily: 'KaiseiDecol',
-        colorScheme: ColorScheme.fromSeed(
-          primary: const Color.fromRGBO(38, 41, 45, 1),
-          seedColor: const Color.fromARGB(255, 255, 255, 255),
-          secondary: const Color.fromRGBO(209, 165, 92, 1),
+    return ChangeNotifierProvider(
+      create: (context) => UserSignupProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/home': (context) => const HomePage(),
+        },
+        theme: ThemeData(
+          fontFamily: 'KaiseiDecol',
+          colorScheme: ColorScheme.fromSeed(
+            primary: const Color.fromRGBO(38, 41, 45, 1),
+            seedColor: const Color.fromARGB(255, 255, 255, 255),
+            secondary: const Color.fromRGBO(209, 165, 92, 1),
+          ),
+          useMaterial3: true,
         ),
-        useMaterial3: true,
+        home: const LandingPage(),
       ),
-      home: const LandingPage(),
     );
   }
 }
