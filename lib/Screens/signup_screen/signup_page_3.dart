@@ -21,21 +21,24 @@ class _SignupPage3State extends State<SignupPage3> {
   bool showErrMsg = false;
 
   void _completeSignup() async {
-  if (selectedSkinType.isEmpty) {
-    setState(() {
-      showErrMsg = true;
-    });
-  } else {
-    widget.userSignupData.skinType = selectedSkinType;
-    bool success = await signupUser(widget.userSignupData);
-    if (success) {
-      // Navigator.pushReplacementNamed(context, '/home'); // Assuming '/home' is your home route
+    if (selectedSkinType.isEmpty) {
+      setState(() {
+        showErrMsg = true;
+      });
     } else {
-      // Show an error message
-      _showErrorDialog();
+      widget.userSignupData.skinType = selectedSkinType;
+      bool success = await signupUser(widget.userSignupData);
+
+      if (!mounted) return;
+
+      if (success) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        // Show an error message
+        _showErrorDialog();
+      }
     }
   }
-}
 
   void _showErrorDialog() {
     showDialog(
