@@ -28,7 +28,13 @@ class _SignupPage3State extends State<SignupPage3> {
       if (!mounted) return;
 
       if (success) {
-        Navigator.pushReplacementNamed(context, '/home');
+        // Navigator.pushReplacementNamed(context, '/home');
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/home',
+          (Route<dynamic> route) => false,
+        );
       } else {
         // Show an error message
         _showErrorDialog();
