@@ -145,7 +145,11 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
                                 // Process login
-                                Navigator.pushReplacementNamed(context, '/home');
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  '/home',
+                                  (Route<dynamic> route) => false,
+                                );
                               } else {
                                 setState(() {
                                   _autoValidate = true;

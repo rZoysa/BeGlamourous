@@ -1,5 +1,6 @@
 import 'package:be_glamourous/Screens/home_screen/home_page.dart';
 import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
+import 'package:be_glamourous/Screens/splash_screen/splash_screen.dart';
 import 'package:be_glamourous/providers/user_signup_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
+          '/': (context) => const SplashScreen(),
+          '/landing': (context) => const LandingPage(),
           '/home': (context) => const HomePage(),
         },
         theme: ThemeData(
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        home: const LandingPage(),
+        // home: const LandingPage(),
       ),
     );
   }
