@@ -1,4 +1,5 @@
 import 'package:be_glamourous/models/user_signup_data.dart';
+import 'package:be_glamourous/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class UserSignupProvider with ChangeNotifier {
@@ -50,10 +51,10 @@ class UserSignupProvider with ChangeNotifier {
   }
 
   Future<bool> completeSignup() async {
-    // Implement your signup logic here, using _userData
-    print("Signing up user: ${_userData.email}");
-    // Simulate signup delay
-    await Future.delayed(const Duration(seconds: 2));
-    return true; // Simulate a successful signup
+    
+    // print("Signing up user: ${_userData.email}");
+    
+    bool result = await signupUser(_userData);
+    return result; 
   }
 }

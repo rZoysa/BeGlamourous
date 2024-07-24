@@ -1,7 +1,9 @@
 import 'package:be_glamourous/Screens/signup_screen/signup_page_2.dart';
 import 'package:be_glamourous/models/user_signup_data.dart';
+import 'package:be_glamourous/providers/user_signup_provider.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage1 extends StatefulWidget {
   const SignupPage1({super.key});
@@ -26,21 +28,14 @@ class _SignupPage1State extends State<SignupPage1> {
     return emailRegex.hasMatch(email);
   }
 
-  void _goToNextPage() {
+  void _goToNextPage(UserSignupProvider signupProvider) {
     if (_formKey.currentState?.validate() ?? false) {
-      final userSignupData = UserSignupData(
-        email: _emailController.text,
-        password: _passwordController.text,
-        firstName: '',
-        lastName: '',
-        gender: '',
-        age: 18,
-        skinType: '',
-      );
+      signupProvider.updateEmail(_emailController.text);
+      signupProvider.updatePassword(_passwordController.text);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SignupPage2(userSignupData: userSignupData),
+          builder: (context) => SignupPage2(),
         ),
       );
     } else {
@@ -52,6 +47,9 @@ class _SignupPage1State extends State<SignupPage1> {
 
   @override
   Widget build(BuildContext context) {
+    final signupProvider =
+        Provider.of<UserSignupProvider>(context, listen: false);
+
     final textFieldLabelStyle = TextStyle(
       fontSize: 28,
       color: Theme.of(context).colorScheme.secondary,
@@ -108,7 +106,7 @@ class _SignupPage1State extends State<SignupPage1> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Email is required';
-                            }else if (!_isValidEmail(value)){
+                            } else if (!_isValidEmail(value)) {
                               return 'Enter a valid email';
                             }
                             return null;
@@ -225,7 +223,7 @@ class _SignupPage1State extends State<SignupPage1> {
                         ),
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: _goToNextPage,
+                            onPressed: () => _goToNextPage(signupProvider),
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   Theme.of(context).colorScheme.secondary,

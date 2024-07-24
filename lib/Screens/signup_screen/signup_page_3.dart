@@ -1,16 +1,11 @@
 import 'package:be_glamourous/Screens/signup_screen/widgets/skin_type_buttons.dart';
-import 'package:be_glamourous/models/user_signup_data.dart';
-import 'package:be_glamourous/services/auth_service.dart';
+import 'package:be_glamourous/providers/user_signup_provider.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage3 extends StatefulWidget {
-  final UserSignupData userSignupData;
-
-  const SignupPage3({
-    super.key,
-    required this.userSignupData,
-  });
+  const SignupPage3({super.key});
 
   @override
   State<SignupPage3> createState() => _SignupPage3State();
@@ -20,14 +15,15 @@ class _SignupPage3State extends State<SignupPage3> {
   String selectedSkinType = '';
   bool showErrMsg = false;
 
-  void _completeSignup() async {
+  void _completeSignup(UserSignupProvider signupProvider) async {
     if (selectedSkinType.isEmpty) {
       setState(() {
         showErrMsg = true;
       });
     } else {
-      widget.userSignupData.skinType = selectedSkinType;
-      bool success = await signupUser(widget.userSignupData);
+      signupProvider.updateSkinType(selectedSkinType);
+
+      bool success = await signupProvider.completeSignup();
 
       if (!mounted) return;
 
@@ -51,7 +47,7 @@ class _SignupPage3State extends State<SignupPage3> {
           TextButton(
             child: const Text('Okay'),
             onPressed: () {
-              Navigator.of(ctx).pop(); // Dismiss the dialog
+              Navigator.of(context).pop(); // Dismiss the dialog
             },
           ),
         ],
@@ -61,6 +57,8 @@ class _SignupPage3State extends State<SignupPage3> {
 
   @override
   Widget build(BuildContext context) {
+    final signupProvider = Provider.of<UserSignupProvider>(context);
+
     final textFieldLabelStyle = TextStyle(
       fontSize: 28,
       color: Theme.of(context).colorScheme.secondary,
@@ -131,7 +129,7 @@ class _SignupPage3State extends State<SignupPage3> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: _completeSignup,
+                        onPressed: () => _completeSignup(signupProvider),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Theme.of(context).colorScheme.secondary,

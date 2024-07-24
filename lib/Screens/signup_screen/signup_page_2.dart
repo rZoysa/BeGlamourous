@@ -1,15 +1,11 @@
 import 'package:be_glamourous/Screens/signup_screen/signup_page_3.dart';
-import 'package:be_glamourous/models/user_signup_data.dart';
+import 'package:be_glamourous/providers/user_signup_provider.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage2 extends StatefulWidget {
-  final UserSignupData userSignupData;
-
-  const SignupPage2({
-    super.key,
-    required this.userSignupData,
-  });
+  const SignupPage2({super.key});
 
   @override
   State<SignupPage2> createState() => _SignupPage2State();
@@ -24,23 +20,22 @@ class _SignupPage2State extends State<SignupPage2> {
   bool _autoValidate = false;
   bool _genderSelected = true;
 
-  void _goToNextPage() {
+  void _goToNextPage(UserSignupProvider signupProvider) {
     if (_formKey.currentState?.validate() ?? false) {
       if (gender.isEmpty) {
         setState(() {
           _genderSelected = false;
         });
       } else {
-        widget.userSignupData.firstName = _firstNameController.text;
-        widget.userSignupData.lastName = _lastNameController.text;
-        widget.userSignupData.gender = gender;
-        widget.userSignupData.age = selectedAge;
+        signupProvider.updateFirstName(_firstNameController.text);
+        signupProvider.updateLastName(_lastNameController.text);
+        signupProvider.updateGender(gender);
+        signupProvider.updateAge(selectedAge);
 
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                SignupPage3(userSignupData: widget.userSignupData),
+            builder: (context) => const SignupPage3(),
           ),
         );
       }
@@ -53,6 +48,9 @@ class _SignupPage2State extends State<SignupPage2> {
 
   @override
   Widget build(BuildContext context) {
+    final signupProvider =
+        Provider.of<UserSignupProvider>(context, listen: false);
+
     final textFieldLabelStyle = TextStyle(
       fontSize: 28,
       color: Theme.of(context).colorScheme.secondary,
@@ -299,7 +297,7 @@ class _SignupPage2State extends State<SignupPage2> {
                           ),
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: _goToNextPage,
+                              onPressed: () => _goToNextPage(signupProvider),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     Theme.of(context).colorScheme.secondary,

@@ -15,8 +15,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserSignupProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserSignupProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
