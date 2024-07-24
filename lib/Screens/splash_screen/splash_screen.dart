@@ -16,7 +16,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 2), () {});
-    Navigator.pushReplacementNamed(context, '/landing');
+
+
+    // Check if the widget is still mounted before navigating
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, '/landing');
+    }
   }
 
   @override
