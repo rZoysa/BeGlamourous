@@ -117,6 +117,7 @@ class _SignupPage3State extends State<SignupPage3> {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
+                        FocusScope.of(context).unfocus();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
