@@ -1,5 +1,4 @@
 import 'package:be_glamourous/Screens/signup_screen/signup_page_2.dart';
-import 'package:be_glamourous/models/user_signup_data.dart';
 import 'package:be_glamourous/providers/user_signup_provider.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,7 @@ class _SignupPage1State extends State<SignupPage1> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SignupPage2(),
+          builder: (context) => const SignupPage2(),
         ),
       );
     } else {
