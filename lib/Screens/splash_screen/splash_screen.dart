@@ -19,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacementNamed(
         context, '/home'); // Assuming '/landing' is your landing page route
   }
+  
 
   @override
   Widget build(BuildContext context) {
