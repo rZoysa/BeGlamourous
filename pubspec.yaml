@@ -84,6 +84,11 @@ flutter:
         - asset: assets/fonts/KaiseiDecol-Regular.ttf
         - asset: assets/fonts/KaiseiDecol-Bold.ttf
           weight: 700
+    - family: Jura
+      fonts:
+        - asset: assets/fonts/Jura-Regular.ttf
+        - asset: assets/fonts/Jura-Bold.ttf
+          weight: 700
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

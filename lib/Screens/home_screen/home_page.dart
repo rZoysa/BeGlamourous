@@ -1,3 +1,4 @@
+import 'package:be_glamourous/Screens/main_screen/main_screen.dart';
 import 'package:be_glamourous/components/custom_nav_bar.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  List<Widget> pages = const [];
+  List<Widget> pages = const [MainScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +39,8 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: Colors.transparent,
                   items: const <Widget>[
                     Icon(Icons.home, size: 30, color: Colors.black),
-                    Icon(Icons.settings, size: 30, color: Colors.black,),
-                    // Icon(Icons.compare_arrows, size: 30, color: Colors.black),
+                    Icon(Icons.donut_small_rounded, size: 30, color: Colors.black),
+                    Icon(Icons.settings, size: 30, color: Colors.black),
                     // Icon(Icons.settings, size: 30, color: Colors.black),
                   ],
                   onTap: (value) {
