@@ -32,13 +32,13 @@ class _HomePageState extends State<HomePage> {
                 child: CurvedNavigationBar(
                   height: 55,
                   animationDuration: const Duration(milliseconds: 400),
-                  color: Color.fromARGB(255, 243, 243, 243),
+                  color: const Color.fromARGB(255, 243, 243, 243),
                   buttonBackgroundColor: const Color(0xFFD1A55C),
                   animationCurve: Curves.ease,
                   backgroundColor: Colors.transparent,
                   items: const <Widget>[
                     Icon(Icons.home, size: 30, color: Colors.black),
-                    Icon(Icons.shopping_cart, size: 30, color: Colors.black),
+                    Icon(Icons.settings, size: 30, color: Colors.black,),
                     // Icon(Icons.compare_arrows, size: 30, color: Colors.black),
                     // Icon(Icons.settings, size: 30, color: Colors.black),
                   ],
