@@ -9,6 +9,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final double progress = 0.7;
   @override
   Widget build(BuildContext context) {
     const int itemCount = 4;
@@ -29,6 +30,28 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: Column(
         children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(
+                  value: progress,
+                  strokeWidth: 7.0,
+                  color: const Color(0xff92AE1F),
+                ),
+              ),
+              Text(
+                '${(progress * 100).toInt()}%',
+                style: const TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white,                  
+                ),
+              ),
+            ],
+          ),
           Expanded(
             child: Expanded(
               child: ListView.builder(
@@ -39,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
                       margin: const EdgeInsets.only(bottom: 80),
                     );
                   } else {
-                    return Post();
+                    return const Post();
                   }
                 },
               ),
