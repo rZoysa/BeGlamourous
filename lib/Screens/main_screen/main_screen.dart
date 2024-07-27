@@ -1,3 +1,4 @@
+import 'package:be_glamourous/Screens/main_screen/widgets/analyze_results.dart';
 import 'package:be_glamourous/Screens/main_screen/widgets/post.dart';
 import 'package:flutter/material.dart';
 
@@ -9,10 +10,51 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final double progress = 0.7;
+  final List<String> postTitles = const [
+    'Skin care 101',
+    'Trending skincare products',
+  ];
+
+  final List<String> bodyContents = const [
+    '1. Get the order right.\n'
+        '2. Exfoliate once per week.\n'
+        '3. Always wear an SPF.\n'
+        '4. Drink water, and lots of it.\n'
+        '5. Don’t forget your neck and décolletage.',
+    "1. Neutrogena® Hydro Boost Water Gel Fragrance Free Moisturizer\n"
+        "2. L'Oreal CELL RENEWAL ANTI-AGING MIDNIGHT SERUM\n"
+        "3. Neutrogena Rapid Wrinkle Repair® Regenerating Cream"
+  ];
+
+  final List<double> scores = const [
+    0.74,
+    0.83,
+    0.91,
+    0.61,
+    0.70,
+    0.95,
+  ];
+
+  final List<String> scoreTitles = const [
+    'Overall \nScore',
+    'Redness',
+    'Dart \nSpots',
+    'Fine \nLines',
+    'Smoothness',
+    'Wrinkles'
+  ];
+
+  final List<Color> progressBarColors = const [
+    Color(0xff92AE1F),
+    Color(0xffDB2B20),
+    Color(0xff12419D),
+    Color(0xffFAFF01),
+    Color(0xff801FAE),
+    Color(0xff1FAE3F)
+  ];
+
   @override
   Widget build(BuildContext context) {
-    const int itemCount = 4;
     return Scaffold(
       backgroundColor: const Color.fromARGB(0, 0, 0, 0),
       appBar: AppBar(
@@ -30,39 +72,28 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: Column(
         children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: CircularProgressIndicator(
-                  value: progress,
-                  strokeWidth: 7.0,
-                  color: const Color(0xff92AE1F),
-                ),
-              ),
-              Text(
-                '${(progress * 100).toInt()}%',
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.white,                  
-                ),
-              ),
-            ],
-          ),
           Expanded(
             child: Expanded(
               child: ListView.builder(
-                itemCount: itemCount + 1,
+                scrollDirection: Axis.vertical,
+                itemCount: postTitles.length + 2,
                 itemBuilder: (context, index) {
-                  if (index == itemCount) {
+                  if (index == 0) {
+                    return AnalyzeResults(
+                      progressBarColors: progressBarColors,
+                      scores: scores,
+                      titles: scoreTitles,
+                    );
+                  }
+                  if (index == postTitles.length + 1) {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 80),
                     );
                   } else {
-                    return const Post();
+                    return Post(
+                      title: postTitles[index -1],
+                      body: bodyContents[index -1],
+                    );
                   }
                 },
               ),
