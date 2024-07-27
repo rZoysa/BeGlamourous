@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    const Color iconColor = Color.fromARGB(255, 100, 100, 100);
     return Scaffold(
       body: Container(
           decoration: DecorationHelper.backgroundDecoration(),
@@ -38,10 +39,11 @@ class _HomePageState extends State<HomePage> {
                   animationCurve: Curves.ease,
                   backgroundColor: Colors.transparent,
                   items: const <Widget>[
-                    Icon(Icons.home, size: 30, color: Colors.black),
-                    Icon(Icons.donut_small_rounded, size: 30, color: Colors.black),
-                    Icon(Icons.swap_horizontal_circle_sharp, size: 30, color: Colors.black),
-                    Icon(Icons.person, size: 30, color: Colors.black),
+                    Icon(Icons.home, size: 30, color: iconColor),
+                    Icon(Icons.donut_small_rounded, size: 30, color: iconColor),
+                    Icon(Icons.swap_horizontal_circle_sharp,
+                        size: 30, color: iconColor),
+                    Icon(Icons.person, size: 30, color: iconColor),
                   ],
                   onTap: (value) {
                     setState(() {
