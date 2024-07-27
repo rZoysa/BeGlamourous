@@ -1,5 +1,6 @@
 import 'package:be_glamourous/Screens/main_screen/widgets/analyze_results.dart';
 import 'package:be_glamourous/Screens/main_screen/widgets/post.dart';
+import 'package:be_glamourous/components/cutom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -57,19 +58,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-      appBar: AppBar(
-        toolbarHeight: 60,
-        elevation: 1,
-        scrolledUnderElevation: 0,
-        title: const Text(
-          'Be Glamourous',
-          style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Jura',
-              fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: const Color.fromARGB(0, 145, 24, 24),
-      ),
+      appBar: const CustomAppBar(),
       body: Column(
         children: [
           Expanded(
