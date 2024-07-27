@@ -1,4 +1,5 @@
 import 'package:be_glamourous/Screens/user_profile_screen.dart/widgets/user_profile_app_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileSreen extends StatefulWidget {
@@ -89,7 +90,82 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
                 ),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      elevation: 2,
+                      title: const Icon(
+                        CupertinoIcons.exclamationmark_circle,
+                        color: Colors.red,
+                        size: 48,
+                      ),
+                      content: const Text(
+                        'Confirm Logout',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Jura',
+                            fontWeight: FontWeight.bold),
+                      ),
+                      actions: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  shape: WidgetStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8),
+                                        side: const BorderSide(
+                                          width: 1,
+                                          color: Color(0xFFBCBCBC),
+                                        )),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Jura',
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  shape: WidgetStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8),
+                                        side: const BorderSide(
+                                          width: 1,
+                                          color: Color(0xFFBCBCBC),
+                                        )),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Logout',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.red,
+                                      fontFamily: 'Jura',
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  });
+            },
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
