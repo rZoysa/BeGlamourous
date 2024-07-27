@@ -1,6 +1,7 @@
 import 'package:be_glamourous/Screens/home_screen/home_page.dart';
 import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
 import 'package:be_glamourous/Screens/splash_screen/splash_screen.dart';
+import 'package:be_glamourous/providers/screen_change_provider.dart';
 import 'package:be_glamourous/providers/user_signup_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserSignupProvider()),
+        ChangeNotifierProvider(create: (_) => ScreenChangeProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

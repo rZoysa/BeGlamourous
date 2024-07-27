@@ -1,8 +1,10 @@
 import 'package:be_glamourous/Screens/main_screen/main_screen.dart';
 import 'package:be_glamourous/Screens/user_profile_screen.dart/user_profile_sreen.dart';
 import 'package:be_glamourous/components/custom_nav_bar.dart';
+import 'package:be_glamourous/providers/screen_change_provider.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -49,6 +51,8 @@ class _HomePageState extends State<HomePage> {
                   onTap: (value) {
                     setState(() {
                       _selectedIndex = value;
+                      Provider.of<ScreenChangeProvider>(context, listen: false)
+                          .setScreenId(value);
                     });
                   },
                 ),

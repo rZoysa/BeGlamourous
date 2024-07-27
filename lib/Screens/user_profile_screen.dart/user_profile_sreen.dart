@@ -13,10 +13,9 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: UserProfileAppBar(),
       body: Column(
         children: [
-          
+          UserProfileAppBar()          
         ],
       ),
     );
