@@ -27,6 +27,7 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
           const UserProfileAppBar(),
           const SizedBox(height: 50),
           ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: buttonText.length,
             itemBuilder: (context, index) {
@@ -118,8 +119,7 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
                                 style: ButtonStyle(
                                   shape: WidgetStatePropertyAll(
                                     RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(8),
                                         side: const BorderSide(
                                           width: 1,
                                           color: Color(0xFFBCBCBC),
@@ -142,8 +142,7 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
                                 style: ButtonStyle(
                                   shape: WidgetStatePropertyAll(
                                     RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(8),
                                         side: const BorderSide(
                                           width: 1,
                                           color: Color(0xFFBCBCBC),
@@ -180,7 +179,7 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
               ],
             ),
           ),
-          const Spacer(),
+          const Spacer(flex: 2,),
         ],
       ),
     );
