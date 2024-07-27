@@ -1,4 +1,5 @@
 import 'package:be_glamourous/Screens/main_screen/main_screen.dart';
+import 'package:be_glamourous/Screens/user_profile_screen.dart/user_profile_sreen.dart';
 import 'package:be_glamourous/components/custom_nav_bar.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  List<Widget> pages = const [MainScreen()];
+  List<Widget> pages = const [MainScreen(), UserProfileSreen()];
 
   @override
   Widget build(BuildContext context) {
