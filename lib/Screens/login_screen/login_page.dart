@@ -1,4 +1,6 @@
+import 'package:be_glamourous/Screens/home_screen/home_page.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
+import 'package:be_glamourous/util/navigation/custom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -145,11 +147,8 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
                                 // Process login
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  '/home',
-                                  (Route<dynamic> route) => false,
-                                );
+                                Customnavigation.nextPage(
+                                    context, const HomePage());
                               } else {
                                 setState(() {
                                   _autoValidate = true;
