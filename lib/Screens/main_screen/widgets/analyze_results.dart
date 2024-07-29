@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class AnalyzeResults extends StatefulWidget {
   final List<double> scores;
@@ -55,15 +56,15 @@ class _AnalyzeResultsState extends State<AnalyzeResults> {
                 return Stack(
                   alignment: Alignment.center,
                   children: [
-                    SizedBox(
-                      width: 75,
-                      height: 75,
-                      child: CustomPaint(
-                        painter: CirclePainter(
-                          widget.scores[index],
-                          widget.progressBarColors[index],
-                        ),
-                      ),
+                    CircularPercentIndicator(
+                      radius: 45,
+                      progressColor: widget.progressBarColors[index],
+                      percent: widget.scores[index],
+                      lineWidth: 7,
+                      backgroundColor: Colors.transparent,
+                      circularStrokeCap: CircularStrokeCap.round,
+                      animation: true,
+                      animationDuration: 2000,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -94,37 +95,5 @@ class _AnalyzeResultsState extends State<AnalyzeResults> {
         ),
       ),
     );
-  }
-}
-
-class CirclePainter extends CustomPainter {
-  final double progress;
-  final Color color;
-  CirclePainter(this.progress, this.color);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = color
-      ..strokeWidth = 7.0
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-
-    Offset center = Offset(size.width / 2, size.height / 2);
-    double radius = size.width / 2;
-    double angle = 2 * 3.141592653589793 * progress;
-
-    canvas.drawArc(
-      Rect.fromCircle(center: center, radius: radius),
-      -3.141592653589793 / 2,
-      angle,
-      false,
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
   }
 }
