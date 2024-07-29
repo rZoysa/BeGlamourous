@@ -1,4 +1,5 @@
 import 'package:be_glamourous/Screens/social_platform_screen/post_image_view_screen.dart';
+import 'package:be_glamourous/util/navigation/custom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -169,28 +170,8 @@ class _SocialPostState extends State<SocialPost> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return PostImageViewScreen(imageList: imageUrls);
-                  },
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    const begin = Offset(1.0, 0.0);
-                    const end = Offset.zero;
-                    const curve = Curves.ease;
-
-                    var tween = Tween(begin: begin, end: end)
-                        .chain(CurveTween(curve: curve));
-                    var offsetAnimation = animation.drive(tween);
-
-                    return SlideTransition(
-                      position: offsetAnimation,
-                      child: child,
-                    );
-                  },
-                ),
-              );
+              Customnavigation.nextPage2(
+                  context, PostImageViewScreen(imageList: imageUrls));
             },
             child: buildImages(),
           ),
