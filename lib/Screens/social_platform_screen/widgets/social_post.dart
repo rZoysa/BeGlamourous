@@ -1,3 +1,4 @@
+import 'package:be_glamourous/Screens/social_platform_screen/post_image_view_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,11 +12,11 @@ class SocialPost extends StatefulWidget {
 class _SocialPostState extends State<SocialPost> {
   final List<String> imageUrls = [
     'https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/masterpieces/veneno/veneno_over_rev_01_m.jpg',
-    'https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/masterpieces/veneno/veneno_over_rev_01_m.jpg',
-    'https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/masterpieces/veneno/veneno_over_rev_01_m.jpg',
-    'https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/masterpieces/veneno/veneno_over_rev_01_m.jpg',
-    'https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/masterpieces/veneno/veneno_over_rev_01_m.jpg',
-    'https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/masterpieces/veneno/veneno_over_rev_01_m.jpg',
+    'https://i.pinimg.com/736x/f8/14/cb/f814cb5f083156598ba67293cc630166.jpg',
+    'https://assets.porsche.com/rs/beograd/-/media/Project/DealerWebsites/SharedDealersWebsite/Master-Model-Page/911-GT3-RS/Header/911-gt3-rs-desktop.jpg?rev=-1',
+    'https://cdn.motor1.com/images/mgl/qkkj81/s3/porsche-911-gt3-rs-2022.jpg',
+    'https://live.staticflickr.com/65535/52427589980_51110c8586_c.jpg',
+    'https://www.topgear.com/sites/default/files/2023/03/1-Aston-Martin-Valkyrie.jpg',
   ];
 
   Widget buildImages() {
@@ -166,7 +167,33 @@ class _SocialPostState extends State<SocialPost> {
           const SizedBox(
             height: 10,
           ),
-          buildImages(),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return PostImageViewScreen(imageList: imageUrls);
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+                    var offsetAnimation = animation.drive(tween);
+
+                    return SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            },
+            child: buildImages(),
+          ),
           const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
