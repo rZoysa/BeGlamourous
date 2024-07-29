@@ -40,7 +40,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar>
   void _startAnimation() {
     _controller.reset();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 10), () {
+      Future.delayed(const Duration(milliseconds: 1), () {
         if (mounted) {
           _controller.forward();
         }

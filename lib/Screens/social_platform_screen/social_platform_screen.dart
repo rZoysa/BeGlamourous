@@ -1,3 +1,4 @@
+import 'package:be_glamourous/components/cutom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class SocialPlatformScreen extends StatefulWidget {
@@ -10,6 +11,9 @@ class SocialPlatformScreen extends StatefulWidget {
 class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return const Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: CustomAppBar(),
+    );
   }
 }
