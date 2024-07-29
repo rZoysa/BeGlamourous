@@ -46,9 +46,9 @@ class _HomePageState extends State<HomePage> {
                   items: const <Widget>[
                     Icon(Icons.home, size: 30, color: iconColor),
                     Icon(Icons.donut_small_rounded, size: 30, color: iconColor),
-                    Icon(Icons.swap_horizontal_circle_sharp,
+                    Icon(Icons.groups_2_rounded,
                         size: 30, color: iconColor),
-                    Icon(Icons.person, size: 30, color: iconColor),
+                    Icon(Icons.menu , size: 30, color: iconColor),
                   ],
                   onTap: (value) {
                     setState(() {
