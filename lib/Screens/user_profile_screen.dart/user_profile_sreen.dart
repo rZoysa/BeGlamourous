@@ -96,7 +96,7 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      elevation: 2,
+                      elevation: 1,
                       title: const Icon(
                         CupertinoIcons.exclamationmark_circle,
                         color: Colors.red,
@@ -115,7 +115,9 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
                           children: [
                             Expanded(
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
                                 style: ButtonStyle(
                                   shape: WidgetStatePropertyAll(
                                     RoundedRectangleBorder(
