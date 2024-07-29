@@ -32,7 +32,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar>
     super.didChangeDependencies();
     final screenIndexProvider = Provider.of<ScreenChangeProvider>(context);
 
-    if (screenIndexProvider.screenId == 1) {
+    if (screenIndexProvider.screenId == 3) {
       _startAnimation();
     }
   }

@@ -1,4 +1,6 @@
 import 'package:be_glamourous/Screens/main_screen/main_screen.dart';
+import 'package:be_glamourous/Screens/skin_analyzer_screen/skin_analyzer_page.dart';
+import 'package:be_glamourous/Screens/social_platform_screen/social_platform_screen.dart';
 import 'package:be_glamourous/Screens/user_profile_screen.dart/user_profile_sreen.dart';
 import 'package:be_glamourous/components/custom_nav_bar.dart';
 import 'package:be_glamourous/providers/screen_change_provider.dart';
@@ -16,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  List<Widget> pages = const [MainScreen(), UserProfileSreen()];
+  List<Widget> pages = const [MainScreen(),SkinAnalyzerPage(), SocialPlatformScreen(), UserProfileSreen()];
 
   @override
   Widget build(BuildContext context) {
