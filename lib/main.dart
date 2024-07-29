@@ -1,4 +1,3 @@
-import 'package:be_glamourous/Screens/home_screen/home_page.dart';
 import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
 import 'package:be_glamourous/Screens/splash_screen/splash_screen.dart';
 import 'package:be_glamourous/providers/screen_change_provider.dart';
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const SplashScreen(),
           '/landing': (context) => const LandingPage(),
-          '/home': (context) => const HomePage(),
         },
         theme: ThemeData(
           fontFamily: 'KaiseiDecol',
