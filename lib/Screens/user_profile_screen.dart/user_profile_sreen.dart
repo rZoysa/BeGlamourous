@@ -137,7 +137,7 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 5),
+                            const SizedBox(width: 10),
                             Expanded(
                               child: TextButton(
                                 onPressed: () {},
