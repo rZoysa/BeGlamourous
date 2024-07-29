@@ -1,3 +1,4 @@
+import 'package:be_glamourous/Screens/home_screen/home_page.dart';
 import 'package:be_glamourous/Screens/signup_screen/widgets/skin_type_buttons.dart';
 import 'package:be_glamourous/providers/user_signup_provider.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
@@ -30,9 +31,9 @@ class _SignupPage3State extends State<SignupPage3> {
       if (success) {
         // Navigator.pushReplacementNamed(context, '/home');
 
-        Navigator.pushNamedAndRemoveUntil(
+        Navigator.pushAndRemoveUntil(
           context,
-          '/home',
+          MaterialPageRoute(builder: (context) => const HomePage()),
           (Route<dynamic> route) => false,
         );
       } else {
