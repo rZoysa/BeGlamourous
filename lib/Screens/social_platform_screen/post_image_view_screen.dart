@@ -35,7 +35,22 @@ class PostImageViewScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Container(
                     margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: Image.network(imageList[index]),
+                    child: Image.network(
+                      imageList[index],
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child; // Image is fully loaded, return the image widget
+                        } else {
+                          return CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null, // Show the actual progress if known
+                          );
+                        }
+                      },
+                    ),
                   );
                 },
               ),
