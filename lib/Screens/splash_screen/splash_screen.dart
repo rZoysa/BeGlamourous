@@ -1,3 +1,5 @@
+import 'package:be_glamourous/Screens/home_screen/home_page.dart';
+import 'package:be_glamourous/util/navigation/custom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,12 +17,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 2), () {});
-
+    await Future.delayed(const Duration(seconds: 1), () {});
 
     // Check if the widget is still mounted before navigating
     if (mounted) {
-      Navigator.pushReplacementNamed(context, '/landing');
+      Customnavigation.nextPage(context, const HomePage());
     }
   }
 
@@ -32,8 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-                'assets/images/Logo-Design-Dark.png'), //Logo
+            Image.asset('assets/images/Logo-Design-Dark.png'), //Logo
             const SizedBox(height: 20),
           ],
         ),
