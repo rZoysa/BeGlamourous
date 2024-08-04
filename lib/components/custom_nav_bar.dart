@@ -1,7 +1,8 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-typedef _LetIndexPage = bool Function(int value);
+typedef LetIndexPage = bool Function(int value);
 
 class CurvedNavigationBar extends StatefulWidget {
   final List<Widget> items;
@@ -10,21 +11,21 @@ class CurvedNavigationBar extends StatefulWidget {
   final Color? buttonBackgroundColor;
   final Color backgroundColor;
   final ValueChanged<int>? onTap;
-  final _LetIndexPage letIndexChange;
+  final LetIndexPage letIndexChange;
   final Curve animationCurve;
   final Duration animationDuration;
   final double height;
   final double? maxWidth;
 
   CurvedNavigationBar({
-    Key? key,
+    super.key,
     required this.items,
     this.index = 0,
     this.color = Colors.white,
     this.buttonBackgroundColor,
     this.backgroundColor = Colors.blueAccent,
     this.onTap,
-    _LetIndexPage? letIndexChange,
+    LetIndexPage? letIndexChange,
     this.animationCurve = Curves.easeOut,
     this.animationDuration = const Duration(milliseconds: 600),
     this.height = 75.0,
@@ -33,8 +34,7 @@ class CurvedNavigationBar extends StatefulWidget {
         assert(items.isNotEmpty),
         assert(0 <= index && index < items.length),
         assert(0 <= height && height <= 75.0),
-        assert(maxWidth == null || 0 <= maxWidth),
-        super(key: key);
+        assert(maxWidth == null || 0 <= maxWidth);
 
   @override
   CurvedNavigationBarState createState() => CurvedNavigationBarState();
@@ -211,7 +211,8 @@ class NavButton extends StatelessWidget {
   final ValueChanged<int> onTap;
   final Widget child;
 
-  NavButton({
+  const NavButton({
+    super.key,
     required this.onTap,
     required this.position,
     required this.length,
@@ -231,7 +232,7 @@ class NavButton extends StatelessWidget {
         onTap: () {
           onTap(index);
         },
-        child: Container(
+        child: SizedBox(
             height: 75.0,
             child: Transform.translate(
               offset: Offset(

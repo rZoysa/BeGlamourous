@@ -1,5 +1,9 @@
 import 'package:be_glamourous/components/cutom_app_bar.dart';
+import 'package:be_glamourous/utils/loaders/custom_loader_icon.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SkinAnalyzerPage extends StatefulWidget {
   const SkinAnalyzerPage({super.key});
@@ -9,11 +13,76 @@ class SkinAnalyzerPage extends StatefulWidget {
 }
 
 class _SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
+  CameraController? controller;
+  List<CameraDescription>? cameras;
+  Future<void>? initializeControllerFuture;
+  int selectedCameraIdx = 0; //0 is Back Camera
+
+  @override
+  void initState() {
+    super.initState();
+    initializeCamera();
+  }
+
+  Future<void> initializeCamera([CameraDescription? camera]) async {
+    var cameraStatus = await Permission.camera.status;
+    if (!cameraStatus.isGranted) {
+      await Permission.camera.request();
+    }
+    if (await Permission.camera.isGranted) {
+      cameras = await availableCameras();
+      selectedCameraIdx = cameras!.indexOf(camera ?? cameras!.first);
+      controller =
+          CameraController(cameras![selectedCameraIdx], ResolutionPreset.max);
+      initializeControllerFuture = controller!.initialize().then((_) {
+        if (mounted) setState(() {});
+      });
+    } else {
+      print('Camera permission not granted');
+    }
+  }
+
+  void switchCamera() {
+    if (cameras == null || cameras!.isEmpty) return;
+    selectedCameraIdx = (selectedCameraIdx + 1) % cameras!.length;
+    controller?.dispose();
+    initializeCamera(cameras![selectedCameraIdx]);
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    if (controller == null || !controller!.value.isInitialized) {
+      return const Center(
+        child: CustomLoaderIcon(),
+      );
+    }
+    return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        icon: const Icon(
+          Icons.change_circle,
+          color: Colors.white,
+        ),
+        onIconPressed: switchCamera,
+      ),
+      body: FutureBuilder<void>(
+        future: initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return CameraPreview(controller!);
+          } else {
+            return const Center(
+              child: CupertinoActivityIndicator(),
+            );
+          }
+        },
+      ),
     );
   }
 }
