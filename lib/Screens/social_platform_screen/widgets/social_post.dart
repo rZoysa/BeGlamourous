@@ -1,5 +1,5 @@
 import 'package:be_glamourous/Screens/social_platform_screen/post_image_view_screen.dart';
-import 'package:be_glamourous/util/navigation/custom_navigation.dart';
+import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

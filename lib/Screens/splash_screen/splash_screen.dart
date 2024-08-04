@@ -1,5 +1,5 @@
 import 'package:be_glamourous/Screens/home_screen/home_page.dart';
-import 'package:be_glamourous/util/navigation/custom_navigation.dart';
+import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
