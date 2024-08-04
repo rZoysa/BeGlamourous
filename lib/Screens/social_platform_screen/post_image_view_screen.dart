@@ -1,4 +1,5 @@
 import 'package:be_glamourous/themes/decoration_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PostImageViewScreen extends StatelessWidget {
@@ -42,11 +43,15 @@ class PostImageViewScreen extends StatelessWidget {
                         if (loadingProgress == null) {
                           return child; // Image is fully loaded, return the image widget
                         } else {
-                          return CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null, // Show the actual progress if known
+                          return Container(
+                            width: double.infinity,
+                            height: 150,
+                            color: Colors.white38,
+                            child: const Center(
+                              child: CupertinoActivityIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
                           );
                         }
                       },
