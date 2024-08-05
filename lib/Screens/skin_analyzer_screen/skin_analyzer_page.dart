@@ -1,4 +1,5 @@
 import 'package:be_glamourous/components/cutom_app_bar.dart';
+import 'package:be_glamourous/utils/dialogs/skin_analyzer_guide_dialog.dart';
 import 'package:be_glamourous/utils/loaders/custom_loader_icon.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +25,15 @@ class _SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
     initializeCamera();
   }
 
+  void showGuideDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const SkinAnalyzerGuideDialog();
+      },
+    );
+  }
+
   Future<void> initializeCamera([CameraDescription? camera]) async {
     var cameraStatus = await Permission.camera.status;
     if (!cameraStatus.isGranted) {
@@ -36,6 +46,7 @@ class _SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
           CameraController(cameras![selectedCameraIdx], ResolutionPreset.max);
       initializeControllerFuture = controller!.initialize().then((_) {
         if (mounted) setState(() {});
+        showGuideDialog();
       });
     } else {
       print('Camera permission not granted');
