@@ -17,8 +17,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  final PageStorageBucket bucket = PageStorageBucket();
+  final List<Widget> _pages = [
+    const MainScreen(key: PageStorageKey('MainScreen')),
+    const SkinAnalyzerPage(key: PageStorageKey('SkinAnalyzerPage')),
+    const SocialPlatformScreen(key: PageStorageKey('SocialPlatformScreen')),
+    const UserProfileSreen(key: PageStorageKey('UserProfileSreen')),
+  ];
 
-  List<Widget> pages = const [MainScreen(),SkinAnalyzerPage(), SocialPlatformScreen(), UserProfileSreen()];
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      Provider.of<ScreenChangeProvider>(context, listen: false)
+          .setScreenId(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +42,9 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: [
               SafeArea(
-                child: IndexedStack(
-                  index: _selectedIndex,
-                  children: pages,
+                child: PageStorage(
+                  bucket: bucket,
+                  child: _pages[_selectedIndex],
                 ),
               ),
               Align(
@@ -46,17 +59,10 @@ class _HomePageState extends State<HomePage> {
                   items: const <Widget>[
                     Icon(Icons.home, size: 30, color: iconColor),
                     Icon(Icons.donut_small_rounded, size: 30, color: iconColor),
-                    Icon(Icons.groups_2_rounded,
-                        size: 30, color: iconColor),
-                    Icon(Icons.menu , size: 30, color: iconColor),
+                    Icon(Icons.groups_2_rounded, size: 30, color: iconColor),
+                    Icon(Icons.menu, size: 30, color: iconColor),
                   ],
-                  onTap: (value) {
-                    setState(() {
-                      _selectedIndex = value;
-                      Provider.of<ScreenChangeProvider>(context, listen: false)
-                          .setScreenId(value);
-                    });
-                  },
+                  onTap: _onItemTapped,
                 ),
               ),
             ],
