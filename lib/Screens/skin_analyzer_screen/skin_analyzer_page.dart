@@ -16,7 +16,7 @@ class _SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
   CameraController? controller;
   List<CameraDescription>? cameras;
   Future<void>? initializeControllerFuture;
-  int selectedCameraIdx = 0; //0 is Back Camera
+  int selectedCameraIdx = 1; //1 is front Camera
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
     }
     if (await Permission.camera.isGranted) {
       cameras = await availableCameras();
-      selectedCameraIdx = cameras!.indexOf(camera ?? cameras!.first);
+      selectedCameraIdx = cameras!.indexOf(camera ?? cameras!.last);
       controller =
           CameraController(cameras![selectedCameraIdx], ResolutionPreset.max);
       initializeControllerFuture = controller!.initialize().then((_) {
