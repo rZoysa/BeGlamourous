@@ -64,7 +64,7 @@ class _AnalyzeResultsState extends State<AnalyzeResults> {
                       backgroundColor: Colors.transparent,
                       circularStrokeCap: CircularStrokeCap.round,
                       animation: true,
-                      animationDuration: 2000,
+                      animationDuration: 900,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
