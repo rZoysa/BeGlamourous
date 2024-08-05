@@ -61,31 +61,29 @@ class _MainScreenState extends State<MainScreen> {
       appBar: const CustomAppBar(),
       body: Column(
         children: [
-          Expanded(
-            child: Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: postTitles.length + 2,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return AnalyzeResults(
-                      progressBarColors: progressBarColors,
-                      scores: scores,
-                      titles: scoreTitles,
-                    );
-                  }
-                  if (index == postTitles.length + 1) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 80),
-                    );
-                  } else {
-                    return Post(
-                      title: postTitles[index -1],
-                      body: bodyContents[index -1],
-                    );
-                  }
-                },
-              ),
+          Flexible(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: postTitles.length + 2,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return AnalyzeResults(
+                    progressBarColors: progressBarColors,
+                    scores: scores,
+                    titles: scoreTitles,
+                  );
+                }
+                if (index == postTitles.length + 1) {
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 80),
+                  );
+                } else {
+                  return Post(
+                    title: postTitles[index -1],
+                    body: bodyContents[index -1],
+                  );
+                }
+              },
             ),
           ),
         ],
