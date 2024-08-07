@@ -1,4 +1,4 @@
-import 'package:be_glamourous/Screens/home_screen/home_page.dart';
+import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
 import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Check if the widget is still mounted before navigating
     if (mounted) {
-      Customnavigation.nextPage(context, const HomePage());
+      Customnavigation.nextPage(context, const LandingPage());
     }
   }
 

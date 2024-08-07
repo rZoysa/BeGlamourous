@@ -44,3 +44,50 @@ Future<bool> signupUser(UserSignupData userSignupData) async {
     return false; // Signifies failure
   }
 }
+
+Future<Map<String, dynamic>> loginUser(String email, String password) async {
+  final String url = "$apiURL/api/login"; // API endpoint URL for login
+
+  // Hash the password using SHA-256
+  var bytes = utf8.encode(password); // data being hashed
+  var hashedPassword = sha256.convert(bytes).toString();
+
+  try {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email': email,
+        'password': hashedPassword,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Handle successful login
+      return {'success': true, 'message': 'Login successful'};
+    } else {
+      // Parse response body for error message if available
+      String errorMessage = 'Login failed. Please try again.';
+      try {
+        errorMessage = response.body;
+      } catch (e) {
+        print('Error parsing response body: $e');
+      }
+
+      // print('Failed to log in. Status code: ${response.statusCode}');
+      // print('Response body: ${response.body}');
+      return {
+        'success': false,
+        'message': errorMessage,
+      };
+    }
+  } catch (e) {
+    // print('Login failed: $e');
+    return {
+      'success': false,
+      'message': 'Network error or server unreachable. Please try again later.'
+    };
+  }
+}

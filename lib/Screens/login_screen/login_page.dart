@@ -1,6 +1,6 @@
 import 'package:be_glamourous/Screens/home_screen/home_page.dart';
+import 'package:be_glamourous/services/auth_service.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
-import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,6 +16,46 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _autoValidate = false;
   bool _isObscure = true;
+
+  void _completeLogin(String email, String password) async {
+    var result = await loginUser(email, password);
+
+    if (!mounted) return;
+
+    if (result['success']) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (Route<dynamic> route) => false,
+      );
+    } else {
+      _showErrorDialog(result['message']);
+    }
+  }
+
+  void _showErrorDialog(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (ctx) => Theme(
+        data: ThemeData(fontFamily: 'Jura'),
+        child: AlertDialog(
+          title: const Text(
+            'Login Failed',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,8 +187,10 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
                                 // Process login
-                                Customnavigation.nextPage(
-                                    context, const HomePage());
+                                // Customnavigation.nextPage(
+                                //     context, const HomePage());
+                                _completeLogin(_emailController.text,
+                                    _passwordController.text);
                               } else {
                                 setState(() {
                                   _autoValidate = true;
