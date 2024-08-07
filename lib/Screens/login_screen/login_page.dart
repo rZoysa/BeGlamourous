@@ -189,8 +189,8 @@ class _LoginPageState extends State<LoginPage> {
                                 // Process login
                                 // Customnavigation.nextPage(
                                 //     context, const HomePage());
-                                _completeLogin(_emailController.text,
-                                    _passwordController.text);
+                                _completeLogin(_emailController.text.trim(),
+                                    _passwordController.text.trim());
                               } else {
                                 setState(() {
                                   _autoValidate = true;
