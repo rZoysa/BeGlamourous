@@ -1,4 +1,6 @@
+import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
 import 'package:be_glamourous/Screens/user_profile_screen.dart/widgets/user_profile_app_bar.dart';
+import 'package:be_glamourous/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,21 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
     'Support',
     'Terms and conditions'
   ];
+
+  void logoutUser() async {
+    await secureStorage.delete(
+      key: 'jwt',
+    ); //Delete the token from the secure storage
+
+    if (mounted) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LandingPage(),
+          ),
+          (Route<dynamic> route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +157,7 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
                             const SizedBox(width: 10),
                             Expanded(
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: logoutUser,
                                 style: ButtonStyle(
                                   shape: WidgetStatePropertyAll(
                                     RoundedRectangleBorder(
@@ -181,7 +198,9 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
               ],
             ),
           ),
-          const Spacer(flex: 2,),
+          const Spacer(
+            flex: 2,
+          ),
         ],
       ),
     );

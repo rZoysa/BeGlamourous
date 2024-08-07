@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:be_glamourous/models/user_signup_data.dart';
 import 'package:be_glamourous/services/api_url.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 final String apiURL = apiUrl();
+final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
 Future<bool> signupUser(UserSignupData userSignupData) async {
   final String url = "$apiURL/api/signup"; // API endpoint URL
@@ -66,6 +68,11 @@ Future<Map<String, dynamic>> loginUser(String email, String password) async {
 
     if (response.statusCode == 200) {
       // Handle successful login
+      final responseData = jsonDecode(response.body);
+
+      String token = responseData['token'];
+      await secureStorage.write(key: 'jwt', value: token);
+
       return {'success': true, 'message': 'Login successful'};
     } else {
       // Parse response body for error message if available
