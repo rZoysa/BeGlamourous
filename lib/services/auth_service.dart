@@ -7,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 final String apiURL = apiUrl();
-final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+const FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
 Future<bool> signupUser(UserSignupData userSignupData) async {
   final String url = "$apiURL/api/signup"; // API endpoint URL
