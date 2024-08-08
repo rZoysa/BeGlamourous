@@ -4,26 +4,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SocialPost extends StatefulWidget {
-  const SocialPost({super.key});
+  final String postID;
+  final List<String> imageUrls;
+  final String userName;
+  final String caption;
+  final String timeStamp;
+  final String userProfilePicURL;
+
+  const SocialPost({
+    super.key,
+    required this.imageUrls,
+    required this.userName,
+    required this.caption,
+    required this.timeStamp,
+    required this.userProfilePicURL,
+    required this.postID,
+  });
 
   @override
   State<SocialPost> createState() => _SocialPostState();
 }
 
 class _SocialPostState extends State<SocialPost> {
-  final List<String> imageUrls = [
-    'https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/masterpieces/veneno/veneno_over_rev_01_m.jpg',
-    'https://i.pinimg.com/736x/f8/14/cb/f814cb5f083156598ba67293cc630166.jpg',
-    'https://assets.porsche.com/rs/beograd/-/media/Project/DealerWebsites/SharedDealersWebsite/Master-Model-Page/911-GT3-RS/Header/911-gt3-rs-desktop.jpg?rev=-1',
-    'https://cdn.motor1.com/images/mgl/qkkj81/s3/porsche-911-gt3-rs-2022.jpg',
-    'https://live.staticflickr.com/65535/52427589980_51110c8586_c.jpg',
-    'https://www.topgear.com/sites/default/files/2023/03/1-Aston-Martin-Valkyrie.jpg',
-  ];
-
   Widget buildImages() {
-    int count = imageUrls.length;
+    int count = widget.imageUrls.length;
     if (count == 1) {
-      return Image.network(imageUrls[0],
+      return Image.network(widget.imageUrls[0],
           width: double.infinity, fit: BoxFit.cover);
     } else if (count == 3) {
       // Handling 3 images: one on top and two below
@@ -31,7 +37,7 @@ class _SocialPostState extends State<SocialPost> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(vertical: 5),
-            child: Image.network(imageUrls[0],
+            child: Image.network(widget.imageUrls[0],
                 width: double.infinity, height: 200, fit: BoxFit.cover),
           ),
           Row(
@@ -39,13 +45,13 @@ class _SocialPostState extends State<SocialPost> {
               Expanded(
                 child: Container(
                   margin: const EdgeInsets.only(right: 2.5),
-                  child: Image.network(imageUrls[1], fit: BoxFit.cover),
+                  child: Image.network(widget.imageUrls[1], fit: BoxFit.cover),
                 ),
               ),
               Expanded(
                 child: Container(
                   margin: const EdgeInsets.only(left: 2.5),
-                  child: Image.network(imageUrls[2], fit: BoxFit.cover),
+                  child: Image.network(widget.imageUrls[2], fit: BoxFit.cover),
                 ),
               ),
             ],
@@ -54,7 +60,7 @@ class _SocialPostState extends State<SocialPost> {
       );
     } else if (count == 2) {
       return Row(
-        children: imageUrls
+        children: widget.imageUrls
             .map((url) => Expanded(
                   child: Container(
                     margin: const EdgeInsets.all(1),
@@ -82,7 +88,7 @@ class _SocialPostState extends State<SocialPost> {
               ? Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.network(imageUrls[index], fit: BoxFit.cover),
+                    Image.network(widget.imageUrls[index], fit: BoxFit.cover),
                     Container(
                       color: Colors.black45,
                       alignment: Alignment.center,
@@ -96,7 +102,7 @@ class _SocialPostState extends State<SocialPost> {
                     )
                   ],
                 )
-              : Image.network(imageUrls[index], fit: BoxFit.cover);
+              : Image.network(widget.imageUrls[index], fit: BoxFit.cover);
         },
       );
     }
@@ -118,18 +124,24 @@ class _SocialPostState extends State<SocialPost> {
             children: [
               Row(
                 children: [
-                  Image.asset(
-                    'assets/images/default_profile_icon.png',
-                    alignment: Alignment.center,
+                  Container(
                     width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(widget.userProfilePicURL),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 10),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "John Doe",
-                        style: TextStyle(
+                        widget.userName,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -137,8 +149,8 @@ class _SocialPostState extends State<SocialPost> {
                         ),
                       ),
                       Text(
-                        '24 Jul 2024',
-                        style: TextStyle(
+                        widget.timeStamp,
+                        style: const TextStyle(
                           color: Colors.white70,
                           fontFamily: 'Jura',
                           fontSize: 12,
@@ -158,9 +170,9 @@ class _SocialPostState extends State<SocialPost> {
               ),
             ],
           ),
-          const Text(
-            'Caption',
-            style: TextStyle(
+          Text(
+            widget.caption,
+            style: const TextStyle(
               fontFamily: 'Jura',
               color: Colors.white,
             ),
@@ -171,7 +183,7 @@ class _SocialPostState extends State<SocialPost> {
           GestureDetector(
             onTap: () {
               Customnavigation.nextPage2(
-                  context, PostImageViewScreen(imageList: imageUrls));
+                  context, PostImageViewScreen(imageList: widget.imageUrls));
             },
             child: buildImages(),
           ),
