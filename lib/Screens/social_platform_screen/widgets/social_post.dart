@@ -130,7 +130,10 @@ class _SocialPostState extends State<SocialPost> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: NetworkImage(widget.userProfilePicURL),
+                        image: widget.userProfilePicURL != ''
+                            ? NetworkImage(widget.userProfilePicURL)
+                            : const AssetImage(
+                                'assets/images/default_profile_icon.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
