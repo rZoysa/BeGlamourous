@@ -36,6 +36,7 @@ class SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
     // Show the dialog and wait for it to be dismissed
     final result = await showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return const SkinAnalyzerGuideDialog();
       },
