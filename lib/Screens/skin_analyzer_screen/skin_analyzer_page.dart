@@ -5,6 +5,7 @@ import 'package:be_glamourous/utils/loaders/custom_loader_icon.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -24,13 +25,9 @@ class SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   showGuideDialog();
-    // });
     final provider = Provider.of<ScreenChangeProvider>(context, listen: false);
     provider.addListener(_handleScreenChange);
     if (provider.screenId == 1) {
-      // Assuming this screen's index is 1
       showGuideDialog();
     }
   }
@@ -53,7 +50,6 @@ class SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
   void _handleScreenChange() {
     final provider = Provider.of<ScreenChangeProvider>(context, listen: false);
     if (provider.screenId == 1) {
-      // initializeCamera();
       showGuideDialog();
     } else {
       disposeCamera();
@@ -74,7 +70,7 @@ class SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
         if (mounted) setState(() {});
       });
     } else {
-      print('Camera permission not granted');
+      Logger().e('Camera permission not granted');
     }
   }
 
@@ -88,12 +84,6 @@ class SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
   void disposeCamera() {
     controller?.dispose(); // Dispose the camera controller
   }
-
-  // @override
-  // void dispose() {
-  //   disposeCamera();
-  //   super.dispose();
-  // }
 
   @override
   void dispose() {
