@@ -137,7 +137,7 @@ class SkinAnalyzerGuideDialog extends StatelessWidget {
                     Expanded(
                       child: TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(true);
                         },
                         style: const ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(Colors.black),

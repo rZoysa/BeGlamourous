@@ -44,6 +44,7 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   jwt_decoder: ^2.0.1
   liquid_pull_to_refresh: ^3.0.1
+  logger: ^2.4.0
 
 dev_dependencies:
   flutter_test:

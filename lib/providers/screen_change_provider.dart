@@ -6,7 +6,9 @@ class ScreenChangeProvider extends ChangeNotifier {
   int get screenId => _screenId;
 
   void setScreenId(int screenId) {
-    _screenId = screenId;
-    notifyListeners();
+    if (_screenId != screenId) {
+      _screenId = screenId;
+      notifyListeners();
+    }
   }
 }

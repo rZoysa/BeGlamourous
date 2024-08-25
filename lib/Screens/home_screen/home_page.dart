@@ -17,12 +17,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  final PageStorageBucket bucket = PageStorageBucket();
+
   final List<Widget> _pages = [
-    const MainScreen(key: PageStorageKey('MainScreen')),
-    const SkinAnalyzerPage(key: PageStorageKey('SkinAnalyzerPage')),
-    const SocialPlatformScreen(key: PageStorageKey('SocialPlatformScreen')),
-    const UserProfileSreen(key: PageStorageKey('UserProfileSreen')),
+    const MainScreen(),
+    const SkinAnalyzerPage(),
+    const SocialPlatformScreen(),
+    const UserProfileSreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -36,37 +36,39 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     const Color iconColor = Color.fromARGB(255, 100, 100, 100);
+
     return Scaffold(
       body: Container(
-          decoration: DecorationHelper.backgroundDecoration(),
-          child: Stack(
-            children: [
-              SafeArea(
-                child: PageStorage(
-                  bucket: bucket,
-                  child: _pages[_selectedIndex],
-                ),
+        decoration: DecorationHelper.backgroundDecoration(),
+        child: Stack(
+          children: [
+            SafeArea(
+              child: IndexedStack(
+                index: _selectedIndex,
+                children: _pages,
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: CurvedNavigationBar(
-                  height: 55,
-                  animationDuration: const Duration(milliseconds: 400),
-                  color: const Color.fromARGB(255, 243, 243, 243),
-                  buttonBackgroundColor: const Color(0xFFD1A55C),
-                  animationCurve: Curves.ease,
-                  backgroundColor: Colors.transparent,
-                  items: const <Widget>[
-                    Icon(Icons.home, size: 30, color: iconColor),
-                    Icon(Icons.donut_small_rounded, size: 30, color: iconColor),
-                    Icon(Icons.groups_2_rounded, size: 30, color: iconColor),
-                    Icon(Icons.menu, size: 30, color: iconColor),
-                  ],
-                  onTap: _onItemTapped,
-                ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: CurvedNavigationBar(
+                height: 55,
+                animationDuration: const Duration(milliseconds: 400),
+                color: const Color.fromARGB(255, 243, 243, 243),
+                buttonBackgroundColor: const Color(0xFFD1A55C),
+                animationCurve: Curves.ease,
+                backgroundColor: Colors.transparent,
+                items: const <Widget>[
+                  Icon(Icons.home, size: 30, color: iconColor),
+                  Icon(Icons.donut_small_rounded, size: 30, color: iconColor),
+                  Icon(Icons.groups_2_rounded, size: 30, color: iconColor),
+                  Icon(Icons.menu, size: 30, color: iconColor),
+                ],
+                onTap: _onItemTapped,
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

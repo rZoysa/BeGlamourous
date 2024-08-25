@@ -1,37 +1,63 @@
 import 'package:be_glamourous/components/cutom_app_bar.dart';
+import 'package:be_glamourous/providers/screen_change_provider.dart';
 import 'package:be_glamourous/utils/dialogs/skin_analyzer_guide_dialog.dart';
 import 'package:be_glamourous/utils/loaders/custom_loader_icon.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class SkinAnalyzerPage extends StatefulWidget {
   const SkinAnalyzerPage({super.key});
 
   @override
-  State<SkinAnalyzerPage> createState() => _SkinAnalyzerPageState();
+  State<SkinAnalyzerPage> createState() => SkinAnalyzerPageState();
 }
 
-class _SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
+class SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
   CameraController? controller;
   List<CameraDescription>? cameras;
   Future<void>? initializeControllerFuture;
-  int selectedCameraIdx = 1; //1 is front Camera
+  int selectedCameraIdx = 1; // 1 is front Camera
 
   @override
   void initState() {
     super.initState();
-    initializeCamera();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   showGuideDialog();
+    // });
+    final provider = Provider.of<ScreenChangeProvider>(context, listen: false);
+    provider.addListener(_handleScreenChange);
+    if (provider.screenId == 1) {
+      // Assuming this screen's index is 1
+      showGuideDialog();
+    }
   }
 
-  void showGuideDialog() {
-    showDialog(
+  Future<void> showGuideDialog() async {
+    // Show the dialog and wait for it to be dismissed
+    final result = await showDialog(
       context: context,
       builder: (context) {
         return const SkinAnalyzerGuideDialog();
       },
     );
+
+    // If the user pressed "Okay", initialize the camera
+    if (result == true) {
+      initializeCamera();
+    }
+  }
+
+  void _handleScreenChange() {
+    final provider = Provider.of<ScreenChangeProvider>(context, listen: false);
+    if (provider.screenId == 1) {
+      // initializeCamera();
+      showGuideDialog();
+    } else {
+      disposeCamera();
+    }
   }
 
   Future<void> initializeCamera([CameraDescription? camera]) async {
@@ -46,7 +72,6 @@ class _SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
           CameraController(cameras![selectedCameraIdx], ResolutionPreset.max);
       initializeControllerFuture = controller!.initialize().then((_) {
         if (mounted) setState(() {});
-        showGuideDialog();
       });
     } else {
       print('Camera permission not granted');
@@ -60,9 +85,21 @@ class _SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
     initializeCamera(cameras![selectedCameraIdx]);
   }
 
+  void disposeCamera() {
+    controller?.dispose(); // Dispose the camera controller
+  }
+
+  // @override
+  // void dispose() {
+  //   disposeCamera();
+  //   super.dispose();
+  // }
+
   @override
   void dispose() {
-    controller?.dispose();
+    Provider.of<ScreenChangeProvider>(context, listen: false)
+        .removeListener(_handleScreenChange);
+    disposeCamera();
     super.dispose();
   }
 
