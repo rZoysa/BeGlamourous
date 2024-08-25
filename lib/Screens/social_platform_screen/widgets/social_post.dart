@@ -2,6 +2,7 @@ import 'package:be_glamourous/Screens/social_platform_screen/post_image_view_scr
 import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SocialPost extends StatefulWidget {
   final String postID;
@@ -152,7 +153,7 @@ class _SocialPostState extends State<SocialPost> {
                         ),
                       ),
                       Text(
-                        widget.timeStamp,
+                        DateFormat('dd MMM yyyy').format(DateTime.parse(widget.timeStamp)),
                         style: const TextStyle(
                           color: Colors.white70,
                           fontFamily: 'Jura',
