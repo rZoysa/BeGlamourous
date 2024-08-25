@@ -1,6 +1,7 @@
 import 'package:be_glamourous/Screens/home_screen/home_page.dart';
 import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
 import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -63,7 +64,9 @@ class _SplashScreenState extends State<SplashScreen> {
             children: <Widget>[
               Image.asset('assets/images/Logo-Design-Dark.png'), // Logo
               const SizedBox(height: 20),
-              const CircularProgressIndicator(), // Optional: Show loading indicator
+              const CupertinoActivityIndicator(
+                color: Colors.white,
+              ), // Optional: Show loading indicator
             ],
           ),
         ),
