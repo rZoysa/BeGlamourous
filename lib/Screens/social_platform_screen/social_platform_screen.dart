@@ -59,14 +59,32 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
           }
 
           if (provider.posts.isEmpty) {
-            return const Center(
-              child: Text(
-                'No posts available',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Jura',
-                  fontSize: 24,
-                ),
+            return LiquidPullToRefresh(
+              showChildOpacityTransition: false,
+              backgroundColor: Colors.white,
+              color: const Color.fromARGB(60, 0, 0, 0),
+              height: 40,
+              onRefresh: _refreshPosts,
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                  ),
+                  const Center(
+                    child: Text(
+                      'No posts available',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Jura',
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }
