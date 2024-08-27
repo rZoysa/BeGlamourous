@@ -1,4 +1,5 @@
 import 'package:be_glamourous/Screens/social_platform_screen/post_image_view_screen.dart';
+import 'package:be_glamourous/Screens/social_platform_screen/widgets/comment_section_builder.dart';
 import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -221,7 +222,8 @@ class _SocialPostState extends State<SocialPost> {
               ),
               const SizedBox(width: 20),
               TextButton(
-                onPressed: () {},
+                onPressed: () => CommentSectionBuilder()
+                    .showBottomSheet(context, widget.postID),
                 child: const Row(
                   children: [
                     Icon(
