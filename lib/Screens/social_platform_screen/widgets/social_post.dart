@@ -27,6 +27,7 @@ class SocialPost extends StatefulWidget {
 }
 
 class _SocialPostState extends State<SocialPost> {
+  bool likePressed = false;
   Widget buildImages() {
     int count = widget.imageUrls.length;
     if (count == 1) {
@@ -153,7 +154,8 @@ class _SocialPostState extends State<SocialPost> {
                         ),
                       ),
                       Text(
-                        DateFormat('dd MMM yyyy').format(DateTime.parse(widget.timeStamp)),
+                        DateFormat('dd MMM yyyy')
+                            .format(DateTime.parse(widget.timeStamp)),
                         style: const TextStyle(
                           color: Colors.white70,
                           fontFamily: 'Jura',
@@ -196,15 +198,21 @@ class _SocialPostState extends State<SocialPost> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                onPressed: () {},
-                child: const Row(
+                onPressed: () {
+                  setState(() {
+                    likePressed = !likePressed;
+                  });
+                },
+                child: Row(
                   children: [
                     Icon(
-                      Icons.thumb_up_outlined,
+                      likePressed
+                          ? Icons.thumb_up_alt_rounded
+                          : Icons.thumb_up_outlined,
                       color: Colors.white,
                     ),
-                    SizedBox(width: 5),
-                    Text(
+                    const SizedBox(width: 5),
+                    const Text(
                       'Like',
                       style: TextStyle(fontFamily: 'Jura', color: Colors.white),
                     ),
