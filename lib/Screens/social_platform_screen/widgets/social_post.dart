@@ -53,7 +53,6 @@ class _SocialPostState extends State<SocialPost> {
         likedCount += likedStatus ? 1 : -1;
       });
     } catch (e) {
-      // Handle error
       Logger().e('Failed to toggle like: $e');
     }
   }
@@ -196,14 +195,14 @@ class _SocialPostState extends State<SocialPost> {
                   ),
                 ],
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.more_horiz,
-                  size: 32,
-                  color: Colors.white,
-                ),
-              ),
+              // IconButton(
+              //   onPressed: () {},
+              //   icon: const Icon(
+              //     Icons.more_horiz,
+              //     size: 32,
+              //     color: Colors.white,
+              //   ),
+              // ),
             ],
           ),
           Text(
