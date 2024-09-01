@@ -141,6 +141,9 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
                                 ? profilePicURL +
                                     post['profilePictureId'].toString()
                                 : '',
+                                likedCount: post['like_count'],
+                                userLikedStatus: post['liked'],
+
                           ),
                         );
                       }

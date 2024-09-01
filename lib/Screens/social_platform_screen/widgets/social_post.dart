@@ -1,9 +1,11 @@
 import 'package:be_glamourous/Screens/social_platform_screen/post_image_view_screen.dart';
 import 'package:be_glamourous/Screens/social_platform_screen/widgets/comment_section_builder.dart';
+import 'package:be_glamourous/services/social_platform_service.dart';
 import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 class SocialPost extends StatefulWidget {
   final String postID;
@@ -12,6 +14,8 @@ class SocialPost extends StatefulWidget {
   final String caption;
   final String timeStamp;
   final String userProfilePicURL;
+  final int likedCount;
+  final bool userLikedStatus;
 
   const SocialPost({
     super.key,
@@ -21,6 +25,8 @@ class SocialPost extends StatefulWidget {
     required this.timeStamp,
     required this.userProfilePicURL,
     required this.postID,
+    required this.likedCount,
+    required this.userLikedStatus,
   });
 
   @override
@@ -28,7 +34,30 @@ class SocialPost extends StatefulWidget {
 }
 
 class _SocialPostState extends State<SocialPost> {
-  bool likePressed = false;
+  late bool likedStatus;
+  late int likedCount;
+
+  @override
+  void initState() {
+    super.initState();
+    likedStatus = widget.userLikedStatus;
+    likedCount = widget.likedCount;
+  }
+
+  void _toggleLike() async {
+    try {
+      final newLikedStatus =
+          await SocialPlatformService().toggleLike(widget.postID);
+      setState(() {
+        likedStatus = newLikedStatus;
+        likedCount += likedStatus ? 1 : -1;
+      });
+    } catch (e) {
+      // Handle error
+      Logger().e('Failed to toggle like: $e');
+    }
+  }
+
   Widget buildImages() {
     int count = widget.imageUrls.length;
     if (count == 1) {
@@ -195,19 +224,22 @@ class _SocialPostState extends State<SocialPost> {
             child: buildImages(),
           ),
           const Divider(),
+          likedCount != 0
+              ? Text(
+                  'Likes: ${likedCount.toString()}',
+                  style:
+                      const TextStyle(color: Colors.white, fontFamily: 'Jura'),
+                )
+              : const SizedBox(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                onPressed: () {
-                  setState(() {
-                    likePressed = !likePressed;
-                  });
-                },
+                onPressed: _toggleLike,
                 child: Row(
                   children: [
                     Icon(
-                      likePressed
+                      likedStatus
                           ? Icons.thumb_up_alt_rounded
                           : Icons.thumb_up_outlined,
                       color: Colors.white,

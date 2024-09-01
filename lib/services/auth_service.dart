@@ -5,6 +5,7 @@ import 'package:be_glamourous/services/api_url.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 final String apiURL = apiUrl();
 const FlutterSecureStorage secureStorage = FlutterSecureStorage();
@@ -34,15 +35,16 @@ Future<bool> signupUser(UserSignupData userSignupData) async {
     );
 
     if (response.statusCode == 201) {
-      print('User registered successfully');
+      Logger().e('User registered successfully');
       return true; // Signifies success
     } else {
-      print('Failed to register user. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      Logger()
+          .e('Failed to register user. Status code: ${response.statusCode}');
+      Logger().e('Response body: ${response.body}');
       return false; // Signifies failure
     }
   } catch (e) {
-    print('Signup failed: $e');
+    Logger().e('Signup failed: $e');
     return false; // Signifies failure
   }
 }
@@ -71,7 +73,9 @@ Future<Map<String, dynamic>> loginUser(String email, String password) async {
       final responseData = jsonDecode(response.body);
 
       String token = responseData['token'];
+      int userID = responseData['userID'];
       await secureStorage.write(key: 'jwt', value: token);
+      await secureStorage.write(key: 'userID', value: userID.toString());
 
       return {'success': true, 'message': 'Login successful'};
     } else {
@@ -80,11 +84,11 @@ Future<Map<String, dynamic>> loginUser(String email, String password) async {
       try {
         errorMessage = response.body;
       } catch (e) {
-        print('Error parsing response body: $e');
+        Logger().e('Error parsing response body: $e');
       }
 
-      // print('Failed to log in. Status code: ${response.statusCode}');
-      // print('Response body: ${response.body}');
+      Logger().e('Failed to log in. Status code: ${response.statusCode}');
+      Logger().e('Response body: ${response.body}');
       return {
         'success': false,
         'message': errorMessage,

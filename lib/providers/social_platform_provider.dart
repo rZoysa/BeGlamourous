@@ -1,5 +1,6 @@
 import 'package:be_glamourous/services/social_platform_service.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class SocialPostsProvider with ChangeNotifier {
   final List<dynamic> _posts = [];
@@ -34,11 +35,12 @@ class SocialPostsProvider with ChangeNotifier {
           _hasMorePosts = false;
         }
       } catch (e) {
-        print('Error fetching posts: $e');
+        Logger().e('Error fetching posts: $e');
       } finally {
         _isLoading = false;
         notifyListeners();
       }
     }
   }
+  
 }
