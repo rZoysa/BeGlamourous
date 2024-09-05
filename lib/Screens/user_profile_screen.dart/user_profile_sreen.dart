@@ -13,9 +13,9 @@ class UserProfileSreen extends StatefulWidget {
 
 class _UserProfileSreenState extends State<UserProfileSreen> {
   final List<String> buttonText = const [
-    'Your Details',
-    'Your analyzes',
-    'App settings',
+    // 'Your Details',
+    // 'Your analyzes',
+    // 'App settings',
     'Support',
     'Terms and conditions'
   ];
