@@ -194,7 +194,7 @@ class CommentSectionBuilder {
                         fontSize: 18,
                       ),
                     ),
-                    const Spacer(flex: 2),
+                    const Spacer(flex: 1),
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.symmetric(
@@ -242,6 +242,7 @@ class CommentSectionBuilder {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 5)
                   ],
                 ),
               );
