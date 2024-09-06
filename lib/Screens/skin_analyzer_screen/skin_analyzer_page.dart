@@ -101,7 +101,6 @@ class SkinAnalyzerPageState extends State<SkinAnalyzerPage> {
       isLoading = false;
     });
 
-    // Handle the result (show it to the user, etc.)
     if (result != null && mounted) {
       Customnavigation.nextPage2(context, AnalyzeResultPage(result: result));
     }
