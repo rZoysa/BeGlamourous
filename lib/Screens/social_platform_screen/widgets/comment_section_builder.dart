@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CommentSectionBuilder {
+  TextEditingController commentController = TextEditingController();
+
   void showBottomSheet(BuildContext context, String postID) {
     final String profilePicURL = '${apiUrl()}/api/profile-picture/';
     showModalBottomSheet<void>(
@@ -113,33 +115,44 @@ class CommentSectionBuilder {
                       Container(
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.symmetric(
-                          vertical: 8,
+                          vertical: 4,
                           horizontal: 10,
                         ),
                         child: Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                            vertical: 0,
+                          ),
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
+                              Radius.circular(20),
                             ),
                             border: Border.all(
                               color: Colors.white54,
                             ),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Post a Comment',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  fontFamily: 'Jura',
+                              Expanded(
+                                child: TextField(
+                                  controller: commentController,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  decoration: const InputDecoration(
+                                    hintText: "Post a comment...",
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Jura',
+                                      color: Colors.white54,
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
                                 ),
                               ),
-                              Icon(
-                                Icons.camera_alt,
+                              const Icon(
+                                Icons.send,
                                 color: Colors.white,
                               ),
                             ],
@@ -153,7 +166,7 @@ class CommentSectionBuilder {
             } else {
               return Container(
                 width: double.infinity,
-                height: 100,
+                height: MediaQuery.of(context).size.height * 0.2,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
@@ -185,33 +198,44 @@ class CommentSectionBuilder {
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.symmetric(
-                        vertical: 8,
+                        vertical: 4,
                         horizontal: 10,
                       ),
                       child: Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 0,
+                        ),
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
+                            Radius.circular(20),
                           ),
                           border: Border.all(
                             color: Colors.white54,
                           ),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Post a Comment',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontFamily: 'Jura',
+                            Expanded(
+                              child: TextField(
+                                controller: commentController,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                decoration: const InputDecoration(
+                                  hintText: "Post a comment...",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white54,
+                                    fontFamily: 'Jura',
+                                  ),
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
-                            Icon(
-                              Icons.camera_alt,
+                            const Icon(
+                              Icons.send,
                               color: Colors.white,
                             ),
                           ],
