@@ -10,7 +10,7 @@ class CommentSectionBuilder {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        final double sheetHeight = MediaQuery.of(context).size.height * 0.35;
+        final double sheetHeight = MediaQuery.of(context).size.height * 0.5;
         return FutureBuilder<List<dynamic>>(
           future: SocialPlatformService().fetchCommentsForPost(postID),
           builder: (context, snapshot) {
@@ -110,6 +110,42 @@ class CommentSectionBuilder {
                           },
                         ),
                       ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 10,
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            border: Border.all(
+                              color: Colors.white54,
+                            ),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Post a Comment',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  fontFamily: 'Jura',
+                                ),
+                              ),
+                              Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -146,6 +182,42 @@ class CommentSectionBuilder {
                       ),
                     ),
                     const Spacer(flex: 2),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 10,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: Colors.white54,
+                          ),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Post a Comment',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontFamily: 'Jura',
+                              ),
+                            ),
+                            Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               );
