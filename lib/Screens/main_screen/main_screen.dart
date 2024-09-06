@@ -32,17 +32,13 @@ class _MainScreenState extends State<MainScreen> {
     0.83,
     0.91,
     0.61,
-    0.70,
-    0.95,
   ];
 
   final List<String> scoreTitles = const [
     'Overall \nScore',
+    'Acne',
+    'Under-Eye \nBags',
     'Redness',
-    'Dart \nSpots',
-    'Fine \nLines',
-    'Smoothness',
-    'Wrinkles'
   ];
 
   final List<Color> progressBarColors = const [
@@ -50,8 +46,6 @@ class _MainScreenState extends State<MainScreen> {
     Color(0xffDB2B20),
     Color(0xff12419D),
     Color(0xffFAFF01),
-    Color(0xff801FAE),
-    Color(0xff1FAE3F)
   ];
 
   @override
@@ -79,8 +73,8 @@ class _MainScreenState extends State<MainScreen> {
                   );
                 } else {
                   return Post(
-                    title: postTitles[index -1],
-                    body: bodyContents[index -1],
+                    title: postTitles[index - 1],
+                    body: bodyContents[index - 1],
                   );
                 }
               },

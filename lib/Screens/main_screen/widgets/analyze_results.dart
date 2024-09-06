@@ -28,37 +28,72 @@ class _AnalyzeResultsState extends State<AnalyzeResults> {
         borderRadius: BorderRadius.circular(14.0),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
-            'Your latest face analyze results',
+            'Your latest face analysis results',
             style: TextStyle(
               color: Colors.white,
               fontSize: 16.0,
             ),
+            textAlign: TextAlign.center,
           ),
           const Divider(
             color: Color.fromARGB(155, 0, 0, 0),
             thickness: 2,
           ),
-          GridView.builder(
-            itemCount: widget.titles.length,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 1.1,
-              crossAxisSpacing: 5,
+          // Top Centered Overall Score
+          Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CircularPercentIndicator(
+                  radius: 60,
+                  progressColor: widget.progressBarColors[0],
+                  percent: widget.scores[0],
+                  lineWidth: 10,
+                  backgroundColor: Colors.transparent,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  animation: true,
+                  animationDuration: 900,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${(widget.scores[0] * 100).toInt()}%',
+                      style: const TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      widget.titles[0],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            itemBuilder: (context, index) {
+          ),
+          const SizedBox(height: 20), // Space between rows
+          // Row for other 3 circles
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(3, (index) {
               return Stack(
                 alignment: Alignment.center,
                 children: [
                   CircularPercentIndicator(
                     radius: 45,
-                    progressColor: widget.progressBarColors[index],
-                    percent: widget.scores[index],
+                    progressColor: widget.progressBarColors[index + 1],
+                    percent: widget.scores[index + 1],
                     lineWidth: 7,
                     backgroundColor: Colors.transparent,
                     circularStrokeCap: CircularStrokeCap.round,
@@ -69,15 +104,15 @@ class _AnalyzeResultsState extends State<AnalyzeResults> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${(widget.scores[index] * 100).toInt()}%',
+                        '${(widget.scores[index + 1] * 100).toInt()}%',
                         style: const TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.normal,
                           color: Colors.white,
                         ),
                       ),
                       Text(
-                        widget.titles[index],
+                        widget.titles[index + 1],
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 8.0,
@@ -88,7 +123,7 @@ class _AnalyzeResultsState extends State<AnalyzeResults> {
                   ),
                 ],
               );
-            },
+            }),
           ),
         ],
       ),
