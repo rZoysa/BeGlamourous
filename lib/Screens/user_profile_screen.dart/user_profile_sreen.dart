@@ -25,6 +25,8 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
       key: 'jwt',
     ); //Delete the token from the secure storage
 
+    await secureStorage.deleteAll();
+
     if (mounted) {
       Navigator.pushAndRemoveUntil(
           context,
