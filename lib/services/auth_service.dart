@@ -95,7 +95,7 @@ Future<Map<String, dynamic>> loginUser(String email, String password) async {
       };
     }
   } catch (e) {
-    // print('Login failed: $e');
+    Logger().e('Login failed: $e');
     return {
       'success': false,
       'message': 'Network error or server unreachable. Please try again later.'
