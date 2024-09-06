@@ -1,7 +1,9 @@
+import 'package:be_glamourous/Screens/social_platform_screen/add_post_screen.dart';
 import 'package:be_glamourous/Screens/social_platform_screen/widgets/social_post.dart';
 import 'package:be_glamourous/components/cutom_app_bar.dart';
 import 'package:be_glamourous/providers/social_platform_provider.dart';
 import 'package:be_glamourous/services/api_url.dart';
+import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -97,6 +99,47 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
             onRefresh: _refreshPosts,
             child: Column(
               children: [
+                GestureDetector(
+                  onTap: () {
+                    Customnavigation.nextPage2(context, const AddPostScreen());
+                  },
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 10,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                        border: Border.all(
+                          color: Colors.white54,
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Share Your Thoughts...',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontFamily: 'Jura',
+                            ),
+                          ),
+                          Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: ListView.builder(
                     controller: _scrollController,
@@ -141,9 +184,8 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
                                 ? profilePicURL +
                                     post['profilePictureId'].toString()
                                 : '',
-                                likedCount: post['like_count'],
-                                userLikedStatus: post['liked'],
-
+                            likedCount: post['like_count'],
+                            userLikedStatus: post['liked'],
                           ),
                         );
                       }
