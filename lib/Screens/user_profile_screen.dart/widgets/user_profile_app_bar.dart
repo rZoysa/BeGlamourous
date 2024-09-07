@@ -1,5 +1,6 @@
 import 'package:be_glamourous/providers/screen_change_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 class UserProfileAppBar extends StatefulWidget {
@@ -13,6 +14,10 @@ class _UserProfileAppBarState extends State<UserProfileAppBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+
+  String _username = '';
+  String _email = '';
 
   @override
   void initState() {
@@ -25,6 +30,13 @@ class _UserProfileAppBarState extends State<UserProfileAppBar>
       parent: _controller,
       curve: Curves.easeInOut,
     );
+    _fetchCredentials();
+  }
+
+  Future<void> _fetchCredentials() async {
+    _username = await _secureStorage.read(key: 'userName') ?? 'User';
+    _email = await _secureStorage.read(key: 'email') ?? 'email@example.com';
+    setState(() {}); // Refresh the widget with fetched data
   }
 
   @override
@@ -100,17 +112,17 @@ class _UserProfileAppBarState extends State<UserProfileAppBar>
                   alignment: Alignment.center,
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'John Doe',
-                  style: TextStyle(
+                Text(
+                  _username,
+                  style: const TextStyle(
                     fontFamily: 'Jura',
                     fontSize: 28,
                     color: Colors.white,
                   ),
                 ),
-                const Text(
-                  'johndoe@email.com',
-                  style: TextStyle(
+                Text(
+                  _email,
+                  style: const TextStyle(
                     fontFamily: 'Jura',
                     fontSize: 18,
                     color: Colors.white70,
