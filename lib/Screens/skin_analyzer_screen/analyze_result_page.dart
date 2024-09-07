@@ -5,6 +5,7 @@ import 'package:be_glamourous/components/cutom_app_bar.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -44,11 +45,12 @@ double calculateHealthScore(Map<String, double> probabilityScores) {
     healthScore -= adjustedProbability * weight;
   });
 
-  return (healthScore * 100).clamp(0.0, 100.0); // Return as a percentage, clamped between 0 and 100
+  return (healthScore * 100)
+      .clamp(0.0, 100.0); // Return as a percentage, clamped between 0 and 100
 }
 
-
 class _AnalyzeResultPageState extends State<AnalyzeResultPage> {
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   late List<String> titles; // Titles for the scores
   late List<double> scores; // Actual scores
   late double overallHealthScore;
@@ -72,6 +74,31 @@ class _AnalyzeResultPageState extends State<AnalyzeResultPage> {
     // Calculate and store the overall health score separately
     overallHealthScore = calculateHealthScore(
         probabilityScores.map((key, value) => MapEntry(key, value.toDouble())));
+  }
+
+  Future<void> _navigateToProductRecommendationPage() async {
+    // Retrieve the userID from SecureStorage
+    String? userID = await secureStorage.read(key: 'userID');
+
+    if (userID != null) {
+      // Prepare the data to pass
+      Map<String, double> scoresMap = Map.fromIterables(titles, scores);
+
+      // Navigate to the ProductRecommendationPage and pass userId
+      if (mounted) {
+        Customnavigation.nextPage2(
+          context,
+          ProductRecommendationPage(
+            scores: scoresMap,
+            titles: titles,
+            userId: int.parse(userID), // Pass userID as an int
+          ),
+        );
+      }
+    } else {
+      Logger().e('User ID not found in session storage');
+      // Handle the case where userID is not found
+    }
   }
 
   @override
@@ -160,19 +187,7 @@ class _AnalyzeResultPageState extends State<AnalyzeResultPage> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: ElevatedButton(
-                        onPressed: () {
-                          // Prepare the data to pass
-                          Map<String, double> scoresMap =
-                              Map.fromIterables(titles, scores);
-                          // Code to navigate to another page
-                          Logger().f(scoresMap);
-                          Customnavigation.nextPage2(
-                              context,
-                              ProductRecommendationPage(
-                                scores: scoresMap,
-                                titles: titles,
-                              ));
-                        },
+                        onPressed: _navigateToProductRecommendationPage,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context)
                               .colorScheme

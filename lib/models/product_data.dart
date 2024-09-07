@@ -1,17 +1,26 @@
+import 'dart:convert';
+
 class Product {
-  final String productId;
   final String name;
   final String description;
   final String brand;
   final List<String> sideEffects;
-  final List<String> suitableSkinType;
 
   Product({
-    required this.productId,
     required this.name,
     required this.description,
     required this.brand,
     required this.sideEffects,
-    required this.suitableSkinType,
   });
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      name: json['Name'],
+      description: json['Description'],
+      brand: json['Brand'],
+      sideEffects: json['SideEffects'] != null
+          ? List<String>.from(jsonDecode(json['SideEffects']))
+          : [],
+    );
+  }
 }
