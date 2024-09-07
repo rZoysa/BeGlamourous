@@ -43,4 +43,23 @@ class SkinAnalyzeService {
       Logger().e('Error occurred while saving scores: $error');
     }
   }
+
+  // Fetch the latest analysis result for the user
+  Future<Map<String, dynamic>?> fetchLatestAnalysisResult(int userId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$apiURL/api/skin-analysis/latest/$userId'),
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        Logger().e('Failed to fetch analysis: ${response.statusCode}');
+        return null;
+      }
+    } catch (error) {
+      Logger().e('Error fetching latest analysis result: $error');
+      return null;
+    }
+  }
 }
