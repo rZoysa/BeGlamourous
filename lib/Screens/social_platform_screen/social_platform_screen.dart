@@ -68,7 +68,7 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
   Future<void> _addPost(String postText, File? imageFile) async {
     try {
       bool success = await SocialPlatformService().addPost(postText, imageFile);
-      if (success) {
+      if (success && mounted) {
         Provider.of<SocialPostsProvider>(context, listen: false).fetchPosts();
       }
     } catch (e) {

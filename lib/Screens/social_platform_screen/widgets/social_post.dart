@@ -253,8 +253,10 @@ class _SocialPostState extends State<SocialPost> {
               ),
               const SizedBox(width: 20),
               TextButton(
-                onPressed: () => CommentSectionBuilder()
-                    .showBottomSheet(context, widget.postID),
+                onPressed: () => CommentSectionBuilder().showBottomSheet(
+                  context,
+                  widget.postID,
+                ),
                 child: const Row(
                   children: [
                     Icon(
