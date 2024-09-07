@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:be_glamourous/services/api_url.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 const secureStorage = FlutterSecureStorage();
 final String apiURL = apiUrl();
@@ -59,5 +61,31 @@ class SocialPlatformService {
     } catch (e) {
       throw Exception('Failed to connect to the server');
     }
-  }
+  } 
+
+  // Method to add a post
+  Future<bool> addPost(String postText, File? imageFile) async {
+    final String? userID = await secureStorage.read(key: 'userID');
+    var request = http.MultipartRequest('POST', Uri.parse('$apiURL/api/add-posts'));
+
+    request.fields['userId'] = userID ?? '';
+    request.fields['content'] = postText;
+
+    // If there is an image, add it to the request
+    if (imageFile != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'image',
+        imageFile.path,
+        contentType: MediaType('image', 'jpeg'), // Update content type as per image format
+      ));
+    }
+
+    var response = await request.send();
+
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      throw Exception('Failed to add post');
+    }
+  } 
 }

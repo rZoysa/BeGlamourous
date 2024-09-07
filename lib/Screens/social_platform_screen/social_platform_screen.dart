@@ -1,12 +1,15 @@
-import 'package:be_glamourous/Screens/social_platform_screen/add_post_screen.dart';
+import 'dart:io';
+
+import 'package:be_glamourous/Screens/social_platform_screen/widgets/add_post_section.dart';
 import 'package:be_glamourous/Screens/social_platform_screen/widgets/social_post.dart';
 import 'package:be_glamourous/components/cutom_app_bar.dart';
 import 'package:be_glamourous/providers/social_platform_provider.dart';
 import 'package:be_glamourous/services/api_url.dart';
-import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
+import 'package:be_glamourous/services/social_platform_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class SocialPlatformScreen extends StatefulWidget {
@@ -42,6 +45,35 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
   Future<void> _refreshPosts() async {
     await Provider.of<SocialPostsProvider>(context, listen: false)
         .fetchPosts(isRefresh: true);
+  }
+
+  void _showAddPostBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return AddPostSection(
+          onPost: (String postText, File? imageFile) async {
+            await _addPost(postText, imageFile);
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _addPost(String postText, File? imageFile) async {
+    try {
+      bool success = await SocialPlatformService().addPost(postText, imageFile);
+      if (success) {
+        Provider.of<SocialPostsProvider>(context, listen: false).fetchPosts();
+      }
+    } catch (e) {
+      Logger().e('Error adding post: $e');
+    }
   }
 
   @override
@@ -101,7 +133,7 @@ class _SocialPlatformScreenState extends State<SocialPlatformScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Customnavigation.nextPage2(context, const AddPostScreen());
+                    _showAddPostBottomSheet(context);
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
