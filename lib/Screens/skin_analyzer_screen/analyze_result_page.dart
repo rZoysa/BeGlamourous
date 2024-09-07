@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:be_glamourous/Screens/skin_analyzer_screen/product_recommendation_page.dart';
 import 'package:be_glamourous/components/cutom_app_bar.dart';
+import 'package:be_glamourous/services/skin_analyze_service.dart';
 import 'package:be_glamourous/themes/decoration_helper.dart';
 import 'package:be_glamourous/utils/navigation/custom_navigation.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,9 @@ class _AnalyzeResultPageState extends State<AnalyzeResultPage> {
     // Calculate and store the overall health score separately
     overallHealthScore = calculateHealthScore(
         probabilityScores.map((key, value) => MapEntry(key, value.toDouble())));
+
+    // Save scores to the database using the service
+    _saveScores();
   }
 
   Future<void> _navigateToProductRecommendationPage() async {
@@ -98,6 +102,25 @@ class _AnalyzeResultPageState extends State<AnalyzeResultPage> {
     } else {
       Logger().e('User ID not found in session storage');
       // Handle the case where userID is not found
+    }
+  }
+
+  Future<void> _saveScores() async {
+    String? userID = await secureStorage.read(key: 'userID');
+
+    if (userID != null) {
+      final SkinAnalyzeService analyzeService = SkinAnalyzeService();
+
+      // Call the service method to save scores
+      await analyzeService.saveScoresToDatabase(
+        userID: int.parse(userID),
+        acneScore: scores[titles.indexOf('acne')],
+        bagsScore: scores[titles.indexOf('bags')],
+        rednessScore: scores[titles.indexOf('redness')],
+        overallHealthScore: overallHealthScore,
+      );
+    } else {
+      Logger().e('User ID not found');
     }
   }
 
