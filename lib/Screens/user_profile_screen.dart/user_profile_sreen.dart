@@ -1,4 +1,6 @@
 import 'package:be_glamourous/Screens/landing_screen/landing_page.dart';
+import 'package:be_glamourous/Screens/user_profile_screen.dart/support_screen.dart';
+import 'package:be_glamourous/Screens/user_profile_screen.dart/terms_and_conditions_screen.dart';
 import 'package:be_glamourous/Screens/user_profile_screen.dart/widgets/user_profile_app_bar.dart';
 import 'package:be_glamourous/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -67,7 +69,24 @@ class _UserProfileSreenState extends State<UserProfileSreen> {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (buttonText[index] == 'Support') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SupportScreen(),
+                          ),
+                        );
+                      } else if (buttonText[index] == 'Terms and conditions') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const TermsAndConditionsScreen(),
+                          ),
+                        );
+                      }
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
