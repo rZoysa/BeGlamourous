@@ -36,6 +36,8 @@ Future<bool> signupUser(UserSignupData userSignupData) async {
 
     if (response.statusCode == 201) {
       Logger().e('User registered successfully');
+      await secureStorage.write(key: 'userName', value: '${userSignupData.firstName} ${userSignupData.lastName}');
+      await secureStorage.write(key: 'email', value: userSignupData.email);
       return true; // Signifies success
     } else {
       Logger()
@@ -72,10 +74,16 @@ Future<Map<String, dynamic>> loginUser(String email, String password) async {
       // Handle successful login
       final responseData = jsonDecode(response.body);
 
+      Logger().f(responseData);
+
       String token = responseData['token'];
       int userID = responseData['userID'];
+      String userName = responseData['userName'];
+      String email = responseData['email'];
       await secureStorage.write(key: 'jwt', value: token);
       await secureStorage.write(key: 'userID', value: userID.toString());
+      await secureStorage.write(key: 'userName', value: userName);
+      await secureStorage.write(key: 'email', value: email);
 
       return {'success': true, 'message': 'Login successful'};
     } else {
