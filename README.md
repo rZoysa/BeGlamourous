@@ -9,8 +9,10 @@
 - **User Authentication** – Secure login and signup system.
 
 ## Screenshots
-- ![Skin Analysis](screenshots/analyse.png) **AI-Powered Facial Analysis**
-- ![Product Recommendations](screenshots/social.png) **Social Platform**
+- ![Skin Analysis](screenshots/landing.jpg) **Landing Screen**
+- ![Skin Analysis](screenshots/home.jpg) **Home Screen**
+- ![Skin Analysis](screenshots/analyze.jpg) **AI-Powered Facial Analysis**
+- ![Product Recommendations](screenshots/social.jpg) **Social Platform**
 
 ## Technologies Used
 - **Frontend:** Flutter (Dart)
