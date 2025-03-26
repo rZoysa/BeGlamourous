@@ -1,4 +1,4 @@
-# Be Glamourous
+# ✨Be Glamourous
 
 **Be Glamourous** is an AI-powered mobile application that analyzes facial skin conditions from selfies and provides personalized skincare recommendations. The app also includes a social platform where users can share experiences, reviews, and skincare tips.
 
